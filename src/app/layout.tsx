@@ -26,8 +26,8 @@ const cormorantGaramond = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: `${siteConfig.clinicName} — ${siteConfig.tagline}`,
-  description: siteConfig.tagline,
+  title: `${siteConfig.clinicName} — ${siteConfig.positioning}`,
+  description: siteConfig.positioningDescription,
 };
 
 export default function RootLayout({

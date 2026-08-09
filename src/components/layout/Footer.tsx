@@ -1,4 +1,5 @@
-import { MapPin, Phone, Mail } from "lucide-react";
+import Image from "next/image";
+import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import SectionEyebrow from "@/components/ui/SectionEyebrow";
 import { siteConfig } from "@/content/site.config";
 
@@ -25,6 +26,8 @@ export default function Footer() {
     siteConfig.contact.address
   )}&output=embed`;
 
+  const hasSocial = Boolean(siteConfig.social.instagram || siteConfig.social.facebook);
+
   return (
     <footer className="bg-champagne px-6 py-20 md:px-12 md:py-24">
       <SectionEyebrow className="mx-auto mb-16 max-w-7xl justify-center">
@@ -32,12 +35,19 @@ export default function Footer() {
       </SectionEyebrow>
       <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-[1fr_1fr_1.3fr]">
         <div>
-          <h3 className="font-display text-2xl text-graphite">
-            {siteConfig.clinicName}
-          </h3>
-          <p className="mt-3 max-w-xs text-sm text-graphite/70">
-            {siteConfig.tagline}
-          </p>
+          <Image
+            src="/images/seven_beauties_logo_vetor.svg"
+            alt={siteConfig.clinicName}
+            width={220}
+            height={102}
+            className="h-auto w-44"
+          />
+          <div className="mt-4 text-sm text-graphite/70">
+            <p>{siteConfig.leadership.name}</p>
+            <p>
+              {siteConfig.leadership.role} • {siteConfig.leadership.credential}
+            </p>
+          </div>
         </div>
         <div>
           <div className="space-y-3 text-sm text-graphite/80">
@@ -45,28 +55,39 @@ export default function Footer() {
               <Phone size={16} /> {siteConfig.contact.phone}
             </p>
             <p className="flex items-center gap-2">
-              <Mail size={16} /> {siteConfig.contact.email}
-            </p>
-            <p className="flex items-center gap-2">
               <MapPin size={16} /> {siteConfig.contact.address}
             </p>
+            <p className="flex items-center gap-2">
+              <Clock size={16} /> {siteConfig.contact.hours}
+            </p>
+            {siteConfig.contact.email && (
+              <p className="flex items-center gap-2">
+                <Mail size={16} /> {siteConfig.contact.email}
+              </p>
+            )}
           </div>
-          <div className="mt-6 flex gap-4 text-graphite/80">
-            <a
-              href={siteConfig.social.instagram}
-              aria-label="Instagram"
-              className="transition-transform duration-300 hover:scale-110"
-            >
-              <InstagramIcon />
-            </a>
-            <a
-              href={siteConfig.social.facebook}
-              aria-label="Facebook"
-              className="transition-transform duration-300 hover:scale-110"
-            >
-              <FacebookIcon />
-            </a>
-          </div>
+          {hasSocial && (
+            <div className="mt-6 flex gap-4 text-graphite/80">
+              {siteConfig.social.instagram && (
+                <a
+                  href={siteConfig.social.instagram}
+                  aria-label="Instagram"
+                  className="transition-transform duration-300 hover:scale-110"
+                >
+                  <InstagramIcon />
+                </a>
+              )}
+              {siteConfig.social.facebook && (
+                <a
+                  href={siteConfig.social.facebook}
+                  aria-label="Facebook"
+                  className="transition-transform duration-300 hover:scale-110"
+                >
+                  <FacebookIcon />
+                </a>
+              )}
+            </div>
+          )}
         </div>
         <div className="h-48 w-full overflow-hidden rounded-2xl shadow-soft md:h-full md:min-h-[180px]">
           <iframe

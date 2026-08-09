@@ -69,6 +69,7 @@ export interface SiteConfig {
     testimonialsTitle: string;
     locationEyebrow: string;
     locationTitle: string;
+    footerEyebrow: string;
   };
   hero: {
     title: string;
@@ -138,6 +139,7 @@ export const siteConfig: SiteConfig = {
     testimonialsTitle: "O que dizem sobre nós",
     locationEyebrow: "Onde estamos",
     locationTitle: "Venha nos conhecer",
+    footerEyebrow: "Contato",
   },
   hero: {
     title: "Estética, saúde e bem-estar em um só lugar.",

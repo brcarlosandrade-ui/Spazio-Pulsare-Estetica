@@ -29,6 +29,7 @@ export default function Header() {
             width={32}
             height={32}
             aria-hidden
+            priority
             className="h-8 w-8"
           />
           <span className="font-cormorant text-2xl font-bold tracking-wide text-graphite md:text-3xl">

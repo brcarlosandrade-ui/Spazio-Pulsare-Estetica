@@ -9,8 +9,9 @@ import {
   Gem,
   type LucideIcon,
 } from "lucide-react";
+import type { IconName } from "@/content/site.config";
 
-export const iconMap: Record<string, LucideIcon> = {
+export const iconMap: Record<IconName, LucideIcon> = {
   sparkles: Sparkles,
   waves: Waves,
   zap: Zap,

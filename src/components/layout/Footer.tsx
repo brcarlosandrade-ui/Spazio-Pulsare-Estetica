@@ -31,13 +31,13 @@ export default function Footer() {
   return (
     <footer className="bg-champagne px-6 py-20 md:px-12 md:py-24">
       <SectionEyebrow className="mx-auto mb-16 max-w-7xl justify-center">
-        Onde estamos
+        {siteConfig.sections.footerEyebrow}
       </SectionEyebrow>
       <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-[1fr_1fr_1.3fr]">
         <div>
           <Image
             src="/images/seven_beauties_logo_vetor.svg"
-            alt={siteConfig.clinicName}
+            alt={`${siteConfig.clinicName} — ${siteConfig.tagline}`}
             width={220}
             height={102}
             className="h-auto w-44"
@@ -65,6 +65,12 @@ export default function Footer() {
                 <Mail size={16} /> {siteConfig.contact.email}
               </p>
             )}
+            <a
+              href={siteConfig.contact.mapsUrl}
+              className="inline-block text-graphite/70 underline underline-offset-2 transition-colors hover:text-graphite"
+            >
+              Ver no Google Maps
+            </a>
           </div>
           {hasSocial && (
             <div className="mt-6 flex gap-4 text-graphite/80">

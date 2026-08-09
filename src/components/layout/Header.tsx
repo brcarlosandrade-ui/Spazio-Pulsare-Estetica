@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Button from "@/components/ui/Button";
 import { siteConfig } from "@/content/site.config";
 
@@ -21,11 +22,18 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-12">
-        <Link
-          href="#top"
-          className="font-cormorant text-2xl font-bold tracking-wide text-graphite md:text-3xl"
-        >
-          {siteConfig.clinicName}
+        <Link href="#top" className="flex items-center gap-2.5">
+          <Image
+            src="/images/logo-mark.svg"
+            alt=""
+            width={32}
+            height={32}
+            aria-hidden
+            className="h-8 w-8"
+          />
+          <span className="font-cormorant text-2xl font-bold tracking-wide text-graphite md:text-3xl">
+            {siteConfig.clinicName}
+          </span>
         </Link>
         <nav className="hidden gap-10 text-sm text-graphite/80 md:flex">
           {siteConfig.nav.map((item) => (

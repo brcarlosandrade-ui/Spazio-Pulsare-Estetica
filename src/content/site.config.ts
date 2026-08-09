@@ -1,13 +1,33 @@
-export interface Procedure {
-  id: string;
-  icon: "droplet" | "wand" | "leaf" | "syringe" | "sun" | "heart";
+export type IconName =
+  | "sparkles"
+  | "waves"
+  | "zap"
+  | "leaf"
+  | "heartpulse"
+  | "shield"
+  | "users"
+  | "gem";
+
+export interface Pillar {
+  icon: IconName;
+  title: string;
+  text: string;
+}
+
+export interface ProcedureItem {
   name: string;
   description: string;
-  ctaLabel: string;
+}
+
+export interface ProcedureCategory {
+  id: string;
+  icon: IconName;
+  title: string;
+  items: ProcedureItem[];
 }
 
 export interface Differentiator {
-  icon: "sparkles" | "shield" | "users" | "gem";
+  icon: IconName;
   title: string;
   text: string;
 }
@@ -22,24 +42,33 @@ export interface Testimonial {
 export interface SiteConfig {
   clinicName: string;
   tagline: string;
+  positioning: string;
+  positioningDescription: string;
   contact: {
     phone: string;
     whatsapp: string;
-    email: string;
+    email?: string;
     address: string;
+    hours: string;
+    mapsUrl: string;
   };
   social: {
-    instagram: string;
-    facebook: string;
+    instagram?: string;
+    facebook?: string;
   };
   nav: { label: string; href: string }[];
   sections: {
+    pillarsTitle: string;
     proceduresEyebrow: string;
     proceduresTitle: string;
     differentiatorsEyebrow: string;
     differentiatorsTitle: string;
+    leadershipEyebrow: string;
+    leadershipTitle: string;
     testimonialsEyebrow: string;
     testimonialsTitle: string;
+    locationEyebrow: string;
+    locationTitle: string;
   };
   hero: {
     title: string;
@@ -47,6 +76,7 @@ export interface SiteConfig {
     ctaPrimaryLabel: string;
     ctaSecondaryLabel: string;
   };
+  pillars: Pillar[];
   about: {
     eyebrow: string;
     title: string;
@@ -55,8 +85,15 @@ export interface SiteConfig {
     signatureRole: string;
     imageUrl: string;
   };
-  procedures: Procedure[];
+  procedureCategories: ProcedureCategory[];
   differentiators: Differentiator[];
+  leadership: {
+    name: string;
+    role: string;
+    credential: string;
+    imageUrl: string;
+    text: string;
+  };
   testimonials: Testimonial[];
   cta: {
     eyebrow: string;
@@ -68,115 +105,166 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   clinicName: "Seven Beauties",
-  tagline: "Elegância, tecnologia e cuidado em cada detalhe.",
+  tagline: "Estética Integrativa",
+  positioning: "Estética Avançada & Integrativa",
+  positioningDescription:
+    "Tratamentos faciais, corporais e terapias integrativas personalizados para você.",
   contact: {
-    phone: "+55 41 9505-1256",
-    whatsapp: `https://wa.me/554195051256?text=${encodeURIComponent(
+    phone: "(41) 99610-6171",
+    whatsapp: `https://wa.me/5541996106171?text=${encodeURIComponent(
       "Olá, vi o site e quero agendar uma avaliação"
     )}`,
-    email: "contato@aurelleclinica.com.br",
-    address: "Av. Cândido de Abreu, 817 - Centro Cívico, Curitiba - PR, 80530-908",
+    address:
+      "Rua Frederico Stadler Júnior, 456 - Capão da Imbuia, Curitiba - PR, 82210-230",
+    hours: "Segunda a sexta, das 8h às 18h",
+    mapsUrl: "https://maps.app.goo.gl/3mRjeqNLjDRRwJ3y7",
   },
-  social: {
-    instagram: "https://instagram.com",
-    facebook: "https://facebook.com",
-  },
+  social: {},
   nav: [
     { label: "Sobre", href: "#sobre" },
     { label: "Procedimentos", href: "#procedimentos" },
+    { label: "Equipe", href: "#equipe" },
     { label: "Depoimentos", href: "#depoimentos" },
   ],
   sections: {
+    pillarsTitle: "Um cuidado que olha para você por inteiro",
     proceduresEyebrow: "Tratamentos",
     proceduresTitle: "Procedimentos",
     differentiatorsEyebrow: "Por que escolher",
     differentiatorsTitle: "Uma clínica que cuida de você, não só da pele",
+    leadershipEyebrow: "Quem cuida",
+    leadershipTitle: "À frente da Seven Beauties",
     testimonialsEyebrow: "Depoimentos",
     testimonialsTitle: "O que dizem sobre nós",
+    locationEyebrow: "Onde estamos",
+    locationTitle: "Venha nos conhecer",
   },
   hero: {
-    title: "Realce sua beleza com tecnologia e cuidado.",
+    title: "Estética, saúde e bem-estar em um só lugar.",
     subtitle:
-      "Tratamentos personalizados para revelar a melhor versão de você.",
+      "Tratamentos faciais, corporais e terapias integrativas personalizados para você.",
     ctaPrimaryLabel: "Agendar Avaliação",
     ctaSecondaryLabel: "Conheça nossos tratamentos",
   },
+  pillars: [
+    {
+      icon: "sparkles",
+      title: "Estética",
+      text: "Tratamentos faciais e corporais pensados para valorizar sua beleza.",
+    },
+    {
+      icon: "leaf",
+      title: "Terapias Integrativas",
+      text: "Técnicas voltadas ao equilíbrio, cuidado e bem-estar.",
+    },
+    {
+      icon: "heartpulse",
+      title: "Saúde",
+      text: "Fisioterapia, nutrição e fonoaudiologia integradas ao cuidado.",
+    },
+  ],
   about: {
     eyebrow: "A clínica",
-    title: "Cuidado que respeita sua individualidade",
+    title: "Cuidado integrativo para corpo e pele",
     paragraph:
-      "Unimos tecnologia de ponta a um olhar humano e personalizado. Cada tratamento é pensado para valorizar suas características naturais, com segurança, ética e resultados que respeitam o tempo de cada pele.",
-    signatureName: "Dra. Marina Costa",
-    signatureRole: "Especialista em Harmonização Facial",
-    imageUrl:
-      "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=1200&auto=format&fit=crop",
+      "Na Seven Beauties, unimos estética e fisioterapia em um cuidado verdadeiramente integrativo. Sob a direção da Dra. Rosimeri Celestino Ribeiro, fisioterapeuta especializada em estética, a clínica reúne procedimentos faciais e corporais, terapias integrativas e acompanhamento em saúde e bem-estar em um só lugar — com técnica, escuta e resultados que respeitam o tempo de cada corpo.",
+    signatureName: "Dra. Rosimeri Celestino Ribeiro",
+    signatureRole: "Fisioterapeuta • Crefito 8/75223-F",
+    imageUrl: "/images/modelo_doutora.png",
   },
-  procedures: [
+  procedureCategories: [
     {
-      id: "skinbooster",
-      icon: "droplet",
-      name: "Skinbooster",
-      description: "Hidratação profunda para uma pele com viço natural.",
-      ctaLabel: "Saiba mais",
+      id: "estetica-facial",
+      icon: "sparkles",
+      title: "Estética Facial",
+      items: [
+        { name: "Toxina Botulínica", description: "Aplicação indicada para suavização de linhas de expressão, conforme avaliação individual." },
+        { name: "Fios de PDO", description: "Procedimento voltado à sustentação facial, indicado conforme avaliação." },
+        { name: "Preenchedores Faciais", description: "Procedimento indicado para contorno e volume facial, conforme avaliação individual." },
+        { name: "Skinbooster", description: "Procedimento voltado à hidratação profunda da pele." },
+        { name: "Peeling Químico", description: "Procedimento indicado para renovação da textura da pele, conforme avaliação." },
+        { name: "Dermaplaning", description: "Técnica de esfoliação suave da pele." },
+        { name: "Microagulhamento", description: "Procedimento indicado para estímulo de colágeno, conforme avaliação profissional." },
+        { name: "Rejuvenescimento Facial", description: "Protocolo voltado ao cuidado facial, conforme avaliação individual." },
+        { name: "Limpeza de Pele", description: "Procedimento de higienização e cuidado profundo da pele." },
+        { name: "Mesoterapia", description: "Técnica de aplicação de ativos voltada à hidratação da pele." },
+      ],
     },
     {
-      id: "harmonizacao",
-      icon: "wand",
-      name: "Harmonização Facial",
-      description: "Equilíbrio e simetria que valorizam sua beleza única.",
-      ctaLabel: "Saiba mais",
+      id: "estetica-corporal",
+      icon: "waves",
+      title: "Estética Corporal",
+      items: [
+        { name: "Criolipólise", description: "Procedimento não invasivo voltado ao tratamento de gordura localizada." },
+        { name: "Drenagem Linfática", description: "Técnica manual voltada à redução de inchaço e melhora da circulação." },
+        { name: "Massagem Redutora", description: "Técnica manual associada à modelagem corporal, conforme avaliação." },
+        { name: "Massagem Relaxante", description: "Técnica voltada ao alívio da tensão e ao relaxamento." },
+        { name: "Massagem Terapêutica", description: "Técnica direcionada ao cuidado de tensões e desconfortos específicos." },
+        { name: "Massagem Miofascial", description: "Técnica manual voltada à liberação de tensões e melhora da mobilidade." },
+        { name: "Pós-Operatório", description: "Acompanhamento fisioterapêutico especializado no período pós-cirúrgico." },
+      ],
     },
     {
-      id: "peeling",
+      id: "procedimentos-esteticos",
+      icon: "zap",
+      title: "Procedimentos Estéticos",
+      items: [
+        { name: "Eletroterapia na Estética", description: "Uso de correntes terapêuticas conforme indicação e avaliação profissional." },
+        { name: "PEIM – Microvasos", description: "Procedimento indicado para tratamento de microvasos, conforme avaliação." },
+        { name: "Depilação a Laser", description: "Técnica de depilação por tecnologia a laser." },
+        { name: "Depilação com Cera", description: "Técnica tradicional de depilação com cera." },
+      ],
+    },
+    {
+      id: "terapias-integrativas",
       icon: "leaf",
-      name: "Peeling de Diamante",
-      description: "Renovação celular suave para uma textura uniforme.",
-      ctaLabel: "Saiba mais",
+      title: "Terapias Integrativas",
+      items: [
+        { name: "Acupuntura", description: "Terapia integrativa realizada conforme indicação e avaliação profissional." },
+        { name: "Auriculoterapia", description: "Técnica de estímulo de pontos auriculares, conforme indicação profissional." },
+        { name: "Ventosaterapia", description: "Técnica manual voltada ao alívio de tensões musculares." },
+        { name: "Ozonioterapia", description: "Terapia integrativa realizada conforme indicação e avaliação profissional." },
+      ],
     },
     {
-      id: "toxina",
-      icon: "syringe",
-      name: "Toxina Botulínica",
-      description: "Suavização de linhas de expressão com naturalidade.",
-      ctaLabel: "Saiba mais",
-    },
-    {
-      id: "bioestimulador",
-      icon: "sun",
-      name: "Bioestimulador de Colágeno",
-      description: "Firmeza e elasticidade que resistem ao tempo.",
-      ctaLabel: "Saiba mais",
-    },
-    {
-      id: "limpeza",
-      icon: "heart",
-      name: "Limpeza de Pele Premium",
-      description: "Ritual de cuidado profundo para uma pele saudável.",
-      ctaLabel: "Saiba mais",
+      id: "saude-bem-estar",
+      icon: "heartpulse",
+      title: "Saúde e Bem-Estar",
+      items: [
+        { name: "Nutrição", description: "Acompanhamento nutricional conforme avaliação individual." },
+        { name: "Fonoaudiologia", description: "Acompanhamento especializado em voz, fala e funções orofaciais." },
+      ],
     },
   ],
   differentiators: [
     {
+      icon: "users",
+      title: "Equipe Multidisciplinar",
+      text: "Profissionais de diferentes áreas trabalhando para oferecer um cuidado mais completo.",
+    },
+    {
       icon: "sparkles",
-      title: "Tecnologia de Ponta",
-      text: "Equipamentos de última geração para resultados precisos e seguros.",
+      title: "Abordagem Integrativa",
+      text: "Estética, fisioterapia e terapias integrativas reunidas em uma abordagem personalizada.",
     },
     {
       icon: "shield",
-      title: "Segurança Clínica",
-      text: "Protocolos rigorosos e profissionais altamente qualificados.",
-    },
-    {
-      icon: "users",
-      title: "Atendimento Personalizado",
-      text: "Cada plano de tratamento é único, feito sob medida para você.",
+      title: "Atendimento Profissional",
+      text: "Cuidado conduzido por profissionais habilitados e especializados em suas áreas.",
     },
     {
       icon: "gem",
-      title: "Experiência Exclusiva",
-      text: "Ambiente pensado para o seu conforto e bem-estar em cada visita.",
+      title: "Plano Personalizado",
+      text: "Cada pessoa possui necessidades diferentes. Por isso, o tratamento é pensado de acordo com seus objetivos.",
     },
   ],
+  leadership: {
+    name: "Dra. Rosimeri Celestino Ribeiro",
+    role: "Fisioterapeuta",
+    credential: "Crefito 8/75223-F",
+    imageUrl: "/images/modelo_doutora.png",
+    text: "Fisioterapeuta responsável pela condução clínica da Seven Beauties, unindo estética, terapias integrativas e cuidados de saúde em um único acompanhamento.",
+  },
   testimonials: [
     {
       name: "Camila R.",
@@ -223,8 +311,8 @@ export const siteConfig: SiteConfig = {
   ],
   cta: {
     eyebrow: "Vamos começar",
-    title: "Sua melhor versão começa com uma conversa.",
+    title: "Sua jornada de cuidado começa com uma conversa.",
     subtitle: "Agende uma avaliação personalizada com nossa equipe.",
-    buttonLabel: "Agendar Avaliação",
+    buttonLabel: "Agendar pelo WhatsApp",
   },
 };

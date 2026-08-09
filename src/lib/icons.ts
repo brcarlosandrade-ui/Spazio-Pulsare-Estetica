@@ -1,11 +1,9 @@
 import {
-  Droplet,
-  Wand2,
-  Leaf,
-  Syringe,
-  Sun,
-  Heart,
   Sparkles,
+  Waves,
+  Zap,
+  Leaf,
+  HeartPulse,
   ShieldCheck,
   Users,
   Gem,
@@ -13,13 +11,11 @@ import {
 } from "lucide-react";
 
 export const iconMap: Record<string, LucideIcon> = {
-  droplet: Droplet,
-  wand: Wand2,
-  leaf: Leaf,
-  syringe: Syringe,
-  sun: Sun,
-  heart: Heart,
   sparkles: Sparkles,
+  waves: Waves,
+  zap: Zap,
+  leaf: Leaf,
+  heartpulse: HeartPulse,
   shield: ShieldCheck,
   users: Users,
   gem: Gem,

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Phone,
   MapPin,
@@ -10,10 +10,11 @@ import {
   Plus,
   Minus,
   Sparkles,
+  GraduationCap,
 } from "lucide-react";
 
-import logoAsset from "@/assets/logo.svg.asset.json";
-import draAsset from "@/assets/dra.png.asset.json";
+import logoImage from "@/assets/logo-tipo.png";
+import draImage from "@/assets/dra-rosimeri.png";
 import heroImage from "@/assets/hero-clinic.jpg";
 import { Marquee } from "@/components/Marquee";
 import { Reveal } from "@/components/Reveal";
@@ -22,10 +23,13 @@ import {
   clinic,
   differentials,
   faqs,
+  getClinicOpenStatus,
+  responsibleTechnician,
   steps,
   testimonials,
   treatmentGroups,
   whatsappUrl,
+  type TreatmentGroup,
 } from "@/lib/clinic";
 
 export const Route = createFileRoute("/")({
@@ -113,11 +117,11 @@ function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-3">
         <a href="#topo" className="flex items-center">
           <img
-            src={logoAsset.url}
+            src={logoImage}
             alt="Seven Beauties Estética Integrativa"
             className="h-11 w-auto sm:h-12"
-            width={1400}
-            height={650}
+            width={734}
+            height={136}
           />
         </a>
         <nav className="hidden items-center gap-7 lg:flex">
@@ -166,6 +170,12 @@ function Header() {
 }
 
 function Hero() {
+  const [status, setStatus] = useState<{ open: boolean; label: string } | null>(null);
+
+  useEffect(() => {
+    setStatus(getClinicOpenStatus());
+  }, []);
+
   return (
     <section id="topo" className="relative overflow-hidden">
       <div
@@ -207,6 +217,23 @@ function Hero() {
               </div>
             ))}
           </dl>
+          {status && (
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3 py-1.5 text-xs text-secondary-foreground">
+                <span
+                  className={`h-2 w-2 shrink-0 rounded-full ${
+                    status.open ? "bg-emerald-500" : "bg-red-500"
+                  }`}
+                  aria-hidden
+                />
+                {status.label}
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3 py-1.5 text-xs text-secondary-foreground">
+                <GraduationCap className="h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
+                {responsibleTechnician}
+              </span>
+            </div>
+          )}
         </Reveal>
 
         <Reveal delay={140} className="relative">
@@ -252,6 +279,45 @@ function SectionHead({
   );
 }
 
+const TREATMENT_ITEMS_LIMIT = 5;
+
+function TreatmentCard({ group, delay }: { group: TreatmentGroup; delay: number }) {
+  const [expanded, setExpanded] = useState(false);
+  const hiddenCount = group.items.length - TREATMENT_ITEMS_LIMIT;
+  const visibleItems = expanded ? group.items : group.items.slice(0, TREATMENT_ITEMS_LIMIT);
+
+  return (
+    <Reveal delay={delay}>
+      <article className="surface-card h-full p-7 transition-shadow duration-300 hover:shadow-[var(--shadow-elegant)]">
+        <h3 className="font-display text-xl">{group.title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          {group.description}
+        </p>
+        <ul className="mt-5 flex flex-wrap gap-2">
+          {visibleItems.map((item) => (
+            <li
+              key={item}
+              className="rounded-full border border-border bg-secondary px-3 py-1.5 text-xs text-secondary-foreground"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+        {hiddenCount > 0 && (
+          <button
+            type="button"
+            onClick={() => setExpanded((v) => !v)}
+            aria-expanded={expanded}
+            className="mt-3 text-xs font-semibold text-primary hover:text-rose-taupe"
+          >
+            {expanded ? "Mostrar menos" : `+${hiddenCount} mais`}
+          </button>
+        )}
+      </article>
+    </Reveal>
+  );
+}
+
 function Treatments() {
   return (
     <section id="tratamentos" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 lg:py-28">
@@ -260,26 +326,9 @@ function Treatments() {
         title="Um cuidado para cada objetivo"
         text="Protocolos conduzidos com técnica, segurança e olhar clínico — sempre adaptados ao seu momento."
       />
-      <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {treatmentGroups.map((g, i) => (
-          <Reveal key={g.id} delay={i * 90}>
-            <article className="surface-card h-full p-7 transition-shadow duration-300 hover:shadow-[var(--shadow-elegant)]">
-              <h3 className="font-display text-xl">{g.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                {g.description}
-              </p>
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {g.items.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-full border border-border bg-secondary px-3 py-1.5 text-xs text-secondary-foreground"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </article>
-          </Reveal>
+          <TreatmentCard key={g.id} group={g} delay={i * 90} />
         ))}
       </div>
     </section>
@@ -328,7 +377,7 @@ function About() {
         <Reveal>
           <div className="overflow-hidden rounded-[2rem] border border-border/70 shadow-[var(--shadow-elegant)]">
             <img
-              src={draAsset.url}
+              src={draImage}
               alt="Dra. Rosimeri Celestino Ribeiro, fisioterapeuta da Seven Beauties"
               loading="lazy"
               width={1536}
@@ -503,7 +552,7 @@ function Footer() {
     <footer className="border-t border-border bg-background">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 px-5 py-10 sm:flex-row sm:justify-between">
         <img
-          src={logoAsset.url}
+          src={logoImage}
           alt="Seven Beauties Estética Integrativa"
           loading="lazy"
           className="h-10 w-auto"

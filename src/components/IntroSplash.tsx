@@ -54,12 +54,12 @@ export function IntroSplash({ children }: { children: React.ReactNode }) {
         <div
           role="presentation"
           onClick={dismiss}
-          className={`fixed inset-0 z-[100] flex items-center justify-center bg-background transition-opacity duration-[400ms] ease-out ${
+          className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#b8b8b8] transition-opacity duration-[400ms] ease-out ${
             fading ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
         >
           <video
-            className="h-full w-full object-cover"
+            className="h-full w-full object-contain"
             autoPlay
             muted
             playsInline

@@ -69,17 +69,22 @@ Inclua animações discretas e respeite prefers-reduced-motion.
 ---
 Se tiver duvida em alguma seção ou qquer coisa me pergunte antes
 
-This project was built with [Lovable](https://lovable.dev).
+Este projeto foi iniciado no [Lovable](https://lovable.dev) e depois baixado
+para desenvolvimento direto neste repositório — **não está mais sincronizado
+com o editor do Lovable**.
 
-**Live app**: https://seven-beauties-integrative.lovable.app
+**Live app**: https://seven-beauties-murex.vercel.app
 
-## Build with Lovable
+## Domínio do site (SEO / prévia de link)
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/b2afaa5e-7f82-442c-8b98-a6e203bbe532).
+O domínio público usado nas tags `og:url`, `canonical` e na imagem de
+prévia (`og:image`/`twitter:image` — a miniatura que aparece ao
+compartilhar o link no WhatsApp etc.) fica centralizado na constante
+`siteUrl` em [`src/lib/clinic.ts`](src/lib/clinic.ts).
 
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
+**Ao configurar um domínio próprio, atualize só essa constante** — os
+outros arquivos (`src/routes/__root.tsx` e `src/routes/index.tsx`) já
+leem o valor de lá.
 
 ## Development
 

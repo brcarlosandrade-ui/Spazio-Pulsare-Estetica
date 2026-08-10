@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { siteUrl } from "../lib/clinic";
 
 function NotFoundComponent() {
   return (
@@ -85,17 +86,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:site_name", content: "Seven Beauties" },
       { property: "og:type", content: "website" },
-      {
-        property: "og:image",
-        content: "https://seven-beauties-murex.vercel.app/og-image.jpg",
-      },
+      { property: "og:image", content: `${siteUrl}/og-image.jpg` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
-      {
-        name: "twitter:image",
-        content: "https://seven-beauties-murex.vercel.app/og-image.jpg",
-      },
+      { name: "twitter:image", content: `${siteUrl}/og-image.jpg` },
     ],
     links: [
       {

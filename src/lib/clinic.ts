@@ -25,6 +25,11 @@ export const whatsappUrl = `https://wa.me/${clinic.contact.whatsapp}?text=${enco
   clinic.contact.whatsappMessage,
 )}`;
 
+// Domínio público do site, usado nas tags og:url/canonical e na imagem de
+// prévia (og:image/twitter:image) compartilhada em WhatsApp, etc.
+// Ao trocar para um domínio próprio, atualize só esta linha (ver README).
+export const siteUrl = "https://seven-beauties-murex.vercel.app";
+
 export const responsibleTechnician = "Responsável técnica Crefito 8/75223-F";
 
 export function getClinicOpenStatus(date: Date = new Date()): {

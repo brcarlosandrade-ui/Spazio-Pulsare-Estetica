@@ -28,6 +28,7 @@ import {
   steps,
   testimonials,
   treatmentGroups,
+  siteUrl,
   whatsappUrl,
   type TreatmentGroup,
 } from "@/lib/clinic";
@@ -51,9 +52,9 @@ export const Route = createFileRoute("/")({
           "Tratamentos faciais, corporais e terapias integrativas personalizados para você.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://seven-beauties-murex.vercel.app/" },
+      { property: "og:url", content: `${siteUrl}/` },
     ],
-    links: [{ rel: "canonical", href: "https://seven-beauties-murex.vercel.app/" }],
+    links: [{ rel: "canonical", href: `${siteUrl}/` }],
     scripts: [
       {
         type: "application/ld+json",

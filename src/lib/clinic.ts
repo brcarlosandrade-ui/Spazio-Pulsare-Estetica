@@ -28,7 +28,7 @@ export const whatsappUrl = `https://wa.me/${clinic.contact.whatsapp}?text=${enco
 // Domínio público do site, usado nas tags og:url/canonical e na imagem de
 // prévia (og:image/twitter:image) compartilhada em WhatsApp, etc.
 // Ao trocar para um domínio próprio, atualize só esta linha (ver README).
-export const siteUrl = "https://spaziopulsare.com.br";
+export const siteUrl = "https://spazio-pulsare-estetica.vercel.app/";
 
 export const responsibleTechnician = "Dra. Jéssica Oliveira · CRBM 0625";
 

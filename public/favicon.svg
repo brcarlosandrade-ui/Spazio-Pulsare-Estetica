@@ -1,7 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 20 550 550">
-  <defs><linearGradient id="p" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#d84a8a"/><stop offset="100%" stop-color="#f08bb8"/></linearGradient></defs>
-  <path d="M235 45 L310 205 L485 205 L348 302 L400 480 L235 380 L70 480 L122 302 L-15 205 L160 205 Z" fill="url(#p)"/>
-  <path d="M235 112 L280 232 L405 232 L307 301 L344 420 L235 350 L126 420 L163 301 L65 232 L190 232 Z" fill="#24262d"/>
-  <path d="M235 137 L266 247 L378 247 L291 307 L322 396 L235 340 L148 396 L179 307 L92 247 L204 247 Z" fill="#fafafa"/>
-  <path d="M229 162 C214 174 207 190 210 204 C213 218 222 227 226 237 C229 246 222 253 211 260 C202 266 199 276 202 286 C205 297 216 306 223 315 C231 325 232 337 227 348 C222 360 216 372 218 384 C220 397 229 407 239 412 C235 397 238 382 245 369 C252 356 260 345 258 332 C256 319 246 309 243 298 C240 287 244 276 253 268 C263 258 269 246 265 235 C261 224 251 218 246 207 C241 197 243 184 251 172 C242 174 235 177 229 162 Z" fill="#d84a8a"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Spazio Pulsare favicon">
+  <defs>
+    <linearGradient id="goldStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7e4a8"/>
+      <stop offset="25%" stop-color="#d7b35d"/>
+      <stop offset="50%" stop-color="#f5d98f"/>
+      <stop offset="75%" stop-color="#b9882f"/>
+      <stop offset="100%" stop-color="#f6dc92"/>
+    </linearGradient>
+    <linearGradient id="goldLeaf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8e8ba"/>
+      <stop offset="30%" stop-color="#d4ae5a"/>
+      <stop offset="65%" stop-color="#c99334"/>
+      <stop offset="100%" stop-color="#f5d98a"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect width="256" height="256" fill="#000000"/>
+
+  <g filter="url(#shadow)">
+    <circle cx="128" cy="128" r="92" fill="none" stroke="url(#goldStroke)" stroke-width="7"/>
+
+    <path d="M62 140C62 93 96 72 129 72C170 72 180 102 176 124C172 148 151 166 127 165C98 164 72 146 62 140Z" fill="none" stroke="url(#goldStroke)" stroke-width="7" stroke-linecap="round"/>
+
+    <path d="M160 119C189 135 193 168 172 188C150 209 111 204 95 175C83 154 90 125 116 108C136 96 154 96 160 119Z" fill="none" stroke="url(#goldStroke)" stroke-width="7" stroke-linecap="round"/>
+
+    <path d="M59 151C76 163 90 171 107 177" fill="none" stroke="url(#goldStroke)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M97 194C112 183 126 176 139 172" fill="none" stroke="url(#goldStroke)" stroke-width="7" stroke-linecap="round"/>
+
+    <g transform="translate(28 44)">
+      <path d="M20 40C34 10 58 2 72 18C86 34 80 57 60 70C44 80 22 79 13 62C8 53 10 46 20 40Z" fill="url(#goldLeaf)"/>
+      <path d="M25 40C35 29 50 23 66 23" fill="none" stroke="#f8ebb0" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M23 52C42 52 58 48 72 39" fill="none" stroke="#f8ebb0" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(166 44) scale(-1 1)">
+      <path d="M20 40C34 10 58 2 72 18C86 34 80 57 60 70C44 80 22 79 13 62C8 53 10 46 20 40Z" fill="url(#goldLeaf)"/>
+      <path d="M25 40C35 29 50 23 66 23" fill="none" stroke="#f8ebb0" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M23 52C42 52 58 48 72 39" fill="none" stroke="#f8ebb0" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(183 147) rotate(34)">
+      <path d="M20 40C34 10 58 2 72 18C86 34 80 57 60 70C44 80 22 79 13 62C8 53 10 46 20 40Z" fill="url(#goldLeaf)"/>
+      <path d="M25 40C35 29 50 23 66 23" fill="none" stroke="#f8ebb0" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M23 52C42 52 58 48 72 39" fill="none" stroke="#f8ebb0" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+
+    <g transform="translate(38 145) rotate(-28)">
+      <path d="M20 40C34 10 58 2 72 18C86 34 80 57 60 70C44 80 22 79 13 62C8 53 10 46 20 40Z" fill="url(#goldLeaf)"/>
+      <path d="M25 40C35 29 50 23 66 23" fill="none" stroke="#f8ebb0" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M23 52C42 52 58 48 72 39" fill="none" stroke="#f8ebb0" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+  </g>
 </svg>

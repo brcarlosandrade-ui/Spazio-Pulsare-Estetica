@@ -29,7 +29,7 @@ export function Marquee() {
   return (
     <section
       aria-label="Especialidades da clínica"
-      className="marquee-paused overflow-hidden border-y border-border/40 bg-rose-taupe"
+      className="marquee-paused overflow-hidden border-y border-[#675249]/20 bg-[#675249]"
     >
       <div className="marquee-track">
         <Sequence />

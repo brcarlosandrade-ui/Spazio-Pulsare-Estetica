@@ -13,8 +13,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-import logoImage from "@/assets/logo-tipo.png";
-import draImage from "@/assets/dra-rosimeri.png";
+import draImage from "@/assets/doutora-jessica.jpg";
 import heroImage from "@/assets/hero-clinic.jpg";
 import { Marquee } from "@/components/Marquee";
 import { Reveal } from "@/components/Reveal";
@@ -36,20 +35,20 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Seven Beauties | Estética Avançada & Integrativa em Curitiba" },
+      { title: "Spazio Pulsare | Estética & Bem-Estar em Curitiba" },
       {
         name: "description",
         content:
-          "Tratamentos faciais, corporais e terapias integrativas personalizados para você. Clínica de estética, saúde e bem-estar em Curitiba - PR.",
+          "Cuidado que valoriza sua beleza natural com tratamentos exclusivos e planejados em estética e bem-estar em Curitiba - PR.",
       },
       {
         property: "og:title",
-        content: "Seven Beauties | Estética Avançada & Integrativa",
+        content: "Spazio Pulsare | Estética & Bem-Estar",
       },
       {
         property: "og:description",
         content:
-          "Tratamentos faciais, corporais e terapias integrativas personalizados para você.",
+          "Tratamentos exclusivos e planejados para realçar sua beleza natural.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${siteUrl}/` },
@@ -67,13 +66,13 @@ export const Route = createFileRoute("/")({
           telephone: clinic.contact.phone,
           address: {
             "@type": "PostalAddress",
-            streetAddress: "Rua Frederico Stadler Júnior, 456 - Capão da Imbuia",
+            streetAddress: "R. Prof. Nivaldo Braga, 1692 - Capão da Imbuia",
             addressLocality: "Curitiba",
             addressRegion: "PR",
-            postalCode: "82210-230",
+            postalCode: "82810-150",
             addressCountry: "BR",
           },
-          openingHours: "Mo-Fr 08:00-18:00",
+          openingHours: "Mo-Sa 09:00-18:00",
         }),
       },
     ],
@@ -114,23 +113,19 @@ function Home() {
 function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/85 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-[#675249]/15 bg-[#F4F3F4]/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-3">
         <a href="#topo" className="flex items-center">
-          <img
-            src={logoImage}
-            alt="Seven Beauties Estética Integrativa"
-            className="h-11 w-auto sm:h-12"
-            width={734}
-            height={136}
-          />
+          <span className="font-display text-lg font-semibold tracking-[0.22em] text-[#675249] sm:text-xl">
+            SPAZIO PULSARE
+          </span>
         </a>
         <nav className="hidden items-center gap-7 lg:flex">
           {NAV.map((n) => (
             <a
               key={n.href}
               href={n.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-rose-taupe"
+              className="text-sm text-[#675249] transition-colors hover:text-[#946652]"
             >
               {n.label}
             </a>
@@ -153,13 +148,13 @@ function Header() {
         </div>
       </div>
       {open && (
-        <nav className="border-t border-border/60 bg-background px-5 py-3 lg:hidden">
+        <nav className="border-t border-[#675249]/15 bg-[#F4F3F4] px-5 py-3 lg:hidden">
           {NAV.map((n) => (
             <a
               key={n.href}
               href={n.href}
               onClick={() => setOpen(false)}
-              className="block py-2 text-sm text-muted-foreground"
+              className="block py-2 text-sm text-[#675249]"
             >
               {n.label}
             </a>
@@ -178,11 +173,11 @@ function Hero() {
   }, []);
 
   return (
-    <section id="topo" className="relative overflow-hidden">
+    <section id="topo" className="relative overflow-hidden bg-[#DCB8A1]">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-[520px]"
-        style={{ backgroundImage: "var(--gradient-veil)" }}
+        style={{ backgroundImage: "linear-gradient(180deg, rgba(255,255,255,0.18), transparent 70%)" }}
       />
       <div
         aria-hidden
@@ -191,11 +186,11 @@ function Hero() {
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 lg:grid-cols-[1.05fr_1fr] lg:py-24">
         <Reveal>
           <p className="eyebrow">{clinic.tagline}</p>
-          <h1 className="mt-4 text-4xl leading-[1.08] sm:text-5xl lg:text-6xl">
-            Estética Avançada
-            <span className="block gradient-text">&amp; Integrativa</span>
+          <h1 className="mt-4 text-4xl leading-[1.08] sm:text-5xl lg:text-6xl text-[#101215]">
+            Cuidado que valoriza
+            <span className="block gradient-text">sua beleza natural</span>
           </h1>
-          <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-[#101215]/75">
             {clinic.positioningDescription}
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -206,11 +201,11 @@ function Hero() {
               Conhecer tratamentos
             </a>
           </div>
-          <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-border pt-7">
+          <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-[#675249]/20 pt-7">
             {[
               ["Facial", "Rejuvenescimento"],
-              ["Corporal", "Contorno & drenagem"],
-              ["Integrativo", "Corpo e mente"],
+              ["Lavieen", "Brilho & textura"],
+              ["Botox", "Naturalidade"],
             ].map(([k, v]) => (
               <div key={k}>
                 <dt className="font-display text-sm font-semibold text-foreground">{k}</dt>
@@ -220,7 +215,7 @@ function Hero() {
           </dl>
           {status && (
             <div className="mt-6 flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3 py-1.5 text-xs text-secondary-foreground">
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#675249]/20 bg-[#F4F3F4] px-3 py-1.5 text-xs text-[#675249]">
                 <span
                   className={`h-2 w-2 shrink-0 rounded-full ${
                     status.open ? "bg-emerald-500" : "bg-red-500"
@@ -229,8 +224,8 @@ function Hero() {
                 />
                 {status.label}
               </span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/60 px-3 py-1.5 text-xs text-secondary-foreground">
-                <GraduationCap className="h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#675249]/20 bg-[#F4F3F4] px-3 py-1.5 text-xs text-[#675249]">
+                <GraduationCap className="h-3.5 w-3.5 shrink-0 text-[#946652]" aria-hidden />
                 {responsibleTechnician}
               </span>
             </div>
@@ -241,7 +236,7 @@ function Hero() {
           <div className="relative overflow-hidden rounded-[2rem] border border-border/70 shadow-[var(--shadow-elegant)]">
             <img
               src={heroImage}
-              alt="Sala de atendimento da clínica Seven Beauties"
+              alt="Sala de atendimento da Spazio Pulsare"
               width={1408}
               height={1600}
               className="h-[420px] w-full object-cover lg:h-[560px]"
@@ -249,9 +244,9 @@ function Hero() {
           </div>
           <div className="surface-card float-slow absolute -bottom-6 left-4 flex items-center gap-3 px-5 py-4 sm:left-8">
             <Sparkles className="h-5 w-5 text-primary" aria-hidden />
-            <p className="font-display text-sm font-semibold">
+            <p className="font-display text-sm font-semibold text-[#101215]">
               Protocolos personalizados
-              <span className="block text-xs font-normal text-muted-foreground">
+              <span className="block text-xs font-normal text-[#101215]/70">
                 Avaliação individualizada
               </span>
             </p>
@@ -266,16 +261,28 @@ function SectionHead({
   eyebrow,
   title,
   text,
+  tone = "default",
 }: {
   eyebrow: string;
   title: string;
   text?: string;
+  tone?: "default" | "light";
 }) {
+  const isLight = tone === "light";
+
   return (
     <Reveal className="max-w-2xl">
-      <p className="eyebrow">{eyebrow}</p>
-      <h2 className="mt-3 text-3xl sm:text-4xl">{title}</h2>
-      {text && <p className="mt-4 text-muted-foreground">{text}</p>}
+      <p className="eyebrow" style={isLight ? { color: "#F2D8AE" } : undefined}>
+        {eyebrow}
+      </p>
+      <h2 className="mt-3 text-3xl sm:text-4xl" style={isLight ? { color: "#FFF7F1" } : undefined}>
+        {title}
+      </h2>
+      {text && (
+        <p className="mt-4" style={isLight ? { color: "rgba(255,255,255,0.8)" } : undefined}>
+          {text}
+        </p>
+      )}
     </Reveal>
   );
 }
@@ -289,16 +296,16 @@ function TreatmentCard({ group, delay }: { group: TreatmentGroup; delay: number 
 
   return (
     <Reveal delay={delay}>
-      <article className="surface-card h-full p-7 transition-shadow duration-300 hover:shadow-[var(--shadow-elegant)]">
-        <h3 className="font-display text-xl">{group.title}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+      <article className="surface-card h-full border border-[#675249]/10 bg-[#F4F3F4] p-7 transition-shadow duration-300 hover:shadow-[var(--shadow-elegant)]">
+        <h3 className="font-display text-xl text-[#101215]">{group.title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-[#101215]/70">
           {group.description}
         </p>
         <ul className="mt-5 flex flex-wrap gap-2">
           {visibleItems.map((item) => (
             <li
               key={item}
-              className="rounded-full border border-border bg-secondary px-3 py-1.5 text-xs text-secondary-foreground"
+              className="rounded-full border border-[#675249]/10 bg-[#DCB8A1]/30 px-3 py-1.5 text-xs text-[#675249]"
             >
               {item}
             </li>
@@ -309,7 +316,7 @@ function TreatmentCard({ group, delay }: { group: TreatmentGroup; delay: number 
             type="button"
             onClick={() => setExpanded((v) => !v)}
             aria-expanded={expanded}
-            className="mt-3 text-xs font-semibold text-primary hover:text-rose-taupe"
+            className="mt-3 text-xs font-semibold text-[#946652] hover:text-[#675249]"
           >
             {expanded ? "Mostrar menos" : `+${hiddenCount} mais`}
           </button>
@@ -321,7 +328,7 @@ function TreatmentCard({ group, delay }: { group: TreatmentGroup; delay: number 
 
 function Treatments() {
   return (
-    <section id="tratamentos" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 lg:py-28">
+    <section id="tratamentos" className="mx-auto max-w-6xl scroll-mt-24 bg-[#F8F7F5] px-5 py-20 lg:py-28">
       <SectionHead
         eyebrow="Tratamentos"
         title="Um cuidado para cada objetivo"
@@ -338,7 +345,7 @@ function Treatments() {
 
 function Differentials() {
   return (
-    <section id="diferenciais" className="scroll-mt-24 bg-secondary/60 py-20 lg:py-28">
+    <section id="diferenciais" className="scroll-mt-24 bg-[#F3F1EF] py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-5">
         <SectionHead
           eyebrow="Diferenciais"
@@ -348,9 +355,9 @@ function Differentials() {
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {differentials.map((d, i) => (
             <Reveal key={d.title} delay={i * 80}>
-              <div className="surface-card h-full p-7">
-                <h3 className="font-display text-lg">{d.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{d.text}</p>
+              <div className="surface-card h-full border border-[#675249]/10 bg-[#F4F3F4] p-7">
+                <h3 className="font-display text-lg text-[#101215]">{d.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#101215]/70">{d.text}</p>
               </div>
             </Reveal>
           ))}
@@ -358,8 +365,8 @@ function Differentials() {
         <ol className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <Reveal key={s.n} delay={i * 80}>
-              <li className="border-t border-rose-taupe/30 pt-5">
-                <span className="font-display text-2xl text-primary">{s.n}</span>
+              <li className="border-t border-[#675249]/15 pt-5">
+                <span className="font-display text-2xl text-[#946652]">{s.n}</span>
                 <h3 className="mt-2 font-display text-base">{s.title}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{s.text}</p>
               </li>
@@ -374,45 +381,50 @@ function Differentials() {
 function About() {
   return (
     <section id="sobre" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 lg:py-28">
-      <div className="grid items-center gap-12 lg:grid-cols-2">
+      <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1.2fr]">
         <Reveal>
-          <div className="overflow-hidden rounded-[2rem] border border-border/70 shadow-[var(--shadow-elegant)]">
+          <div className="relative overflow-hidden rounded-[2.2rem] border border-[#D9B77A]/60 bg-[#F4F3F4] p-3 shadow-[0_30px_90px_-32px_rgba(103,82,73,0.35)]">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(217,183,122,0.28),transparent_58%)]" />
             <img
               src={draImage}
-              alt="Dra. Rosimeri Celestino Ribeiro, fisioterapeuta da Seven Beauties"
+              alt="Dra. Jéssica Oliveira, biomédica esteta da Spazio Pulsare"
               loading="lazy"
-              width={1536}
-              height={1024}
-              className="h-full w-full object-cover"
+              width={1200}
+              height={1500}
+              className="relative h-[560px] w-full rounded-[1.6rem] object-cover object-[center_18%]"
             />
           </div>
         </Reveal>
         <Reveal delay={120}>
           <p className="eyebrow">Sobre</p>
-          <h2 className="mt-3 text-3xl sm:text-4xl">
-            Dra. Rosimeri Celestino Ribeiro
+          <h2 className="mt-3 text-3xl sm:text-4xl text-[#101215]">
+            Dra. Jéssica Oliveira
           </h2>
-          <p className="mt-2 text-sm text-rose-taupe">Fisioterapeuta · Crefito 8/75223-F</p>
-          <div className="mt-6 space-y-4 leading-relaxed text-muted-foreground">
+          <p className="mt-2 text-sm font-medium tracking-[0.12em] text-[#946652] uppercase">Biomédica Esteta · CRBM 0625</p>
+          <div className="mt-6 space-y-4 leading-relaxed text-[#101215]/75">
             <p>
-              À frente da Seven Beauties, a Dra. Rosimeri une fisioterapia dermatofuncional,
-              estética avançada e terapias integrativas em um único cuidado — com escuta
-              atenta e protocolos desenhados para cada pessoa.
+              À frente da Spazio Pulsare, a Dra. Jéssica Oliveira une estética facial e corporal,
+              beleza e cuidado pessoal em um atendimento exclusivo, com escuta atenta e protocolos
+              desenhados para valorizar sua beleza natural.
             </p>
             <p>
-              A proposta é simples e exigente ao mesmo tempo: realçar a sua beleza natural
-              enquanto se cuida da saúde e do bem-estar, com técnica atualizada e resultados
-              coerentes com a sua identidade.
+              Desde 2017, a clínica acompanha pessoas que desejam realçar sua beleza com segurança,
+              sofisticação e um olhar clínico cuidadoso, preservando identidade, equilíbrio e bem-estar.
             </p>
           </div>
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="btn-primary mt-8 inline-flex"
-          >
-            Conversar sobre o meu caso
-          </a>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary"
+            >
+              Conversar sobre o meu caso
+            </a>
+            <a href={clinic.social.instagram} target="_blank" rel="noreferrer" className="btn-ghost">
+              Ver Instagram
+            </a>
+          </div>
         </Reveal>
       </div>
     </section>
@@ -421,17 +433,22 @@ function About() {
 
 function Testimonials() {
   return (
-    <section id="depoimentos" className="scroll-mt-24 bg-secondary/60 py-20 lg:py-28">
+    <section id="depoimentos" className="scroll-mt-24 bg-[#D9B39A] py-20 lg:py-28">
       <div className="mx-auto max-w-6xl px-5">
-        <SectionHead eyebrow="Depoimentos" title="Quem já cuidou por aqui" />
+        <SectionHead
+          eyebrow="Depoimentos"
+          title="Quem já cuidou por aqui"
+          text="Experiências que traduzem bem-estar, confiança e resultados naturais."
+          tone="light"
+        />
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {testimonials.map((t, i) => (
             <Reveal key={t.name} delay={i * 90}>
-              <figure className="surface-card h-full p-7">
-                <blockquote className="text-sm leading-relaxed text-muted-foreground">
+              <figure className="surface-card h-full border border-white/20 bg-[#F4F3F4]/85 p-7 shadow-none">
+                <blockquote className="text-sm leading-relaxed text-[#101215]/85">
                   “{t.text}”
                 </blockquote>
-                <figcaption className="mt-5 font-display text-sm font-semibold">
+                <figcaption className="mt-5 font-display text-sm font-semibold text-[#101215]">
                   {t.name}
                 </figcaption>
               </figure>
@@ -482,41 +499,42 @@ function Faq() {
 function Contact() {
   const { contact } = clinic;
   return (
-    <section id="contato" className="scroll-mt-24 bg-secondary/60 py-20 lg:py-28">
+    <section id="contato" className="scroll-mt-24 bg-[#2E2A28] py-20 lg:py-28">
       <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-2">
         <div>
           <SectionHead
             eyebrow="Contato"
             title="Vamos cuidar de você"
             text="Agende sua avaliação e receba um plano de tratamento feito sob medida."
+            tone="light"
           />
           <Reveal delay={100}>
-            <ul className="mt-10 space-y-5 text-sm">
+            <ul className="mt-10 space-y-5 text-sm text-white/80">
               <li className="flex gap-3">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
-                <a href={`tel:+55${contact.whatsapp.slice(2)}`} className="hover:text-rose-taupe">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[#D9B77A]" aria-hidden />
+                <a href={`tel:+55${contact.whatsapp.slice(2)}`} className="text-white hover:text-[#D9B77A]">
                   {contact.phone}
                 </a>
               </li>
               <li className="flex gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#D9B77A]" aria-hidden />
                 <a
                   href={contact.mapsUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="hover:text-rose-taupe"
+                  className="text-white hover:text-[#D9B77A]"
                 >
                   {contact.address}
                 </a>
               </li>
               <li className="flex gap-3">
-                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
-                <span>{contact.hours}</span>
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-[#D9B77A]" aria-hidden />
+                <span className="text-white/80">{contact.hours}</span>
               </li>
               {contact.email && (
                 <li className="flex gap-3">
-                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden />
-                  <a href={`mailto:${contact.email}`} className="hover:text-rose-taupe">
+                  <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[#D9B77A]" aria-hidden />
+                  <a href={`mailto:${contact.email}`} className="text-white hover:text-[#D9B77A]">
                     {contact.email}
                   </a>
                 </li>
@@ -526,7 +544,7 @@ function Contact() {
               <a href={whatsappUrl} target="_blank" rel="noreferrer" className="btn-primary">
                 Agendar pelo WhatsApp
               </a>
-              <a href={contact.mapsUrl} target="_blank" rel="noreferrer" className="btn-ghost">
+              <a href={contact.mapsUrl} target="_blank" rel="noreferrer" className="btn-ghost border-white/20 text-white hover:bg-white/5 hover:text-[#D9B77A]">
                 Ver no mapa
               </a>
             </div>
@@ -535,8 +553,8 @@ function Contact() {
         <Reveal delay={160}>
           <div className="h-full overflow-hidden rounded-[2rem] border border-border/70 shadow-[var(--shadow-soft)]">
             <iframe
-              title="Mapa da localização da Seven Beauties"
-              src="https://www.google.com/maps?q=Rua%20Frederico%20Stadler%20J%C3%BAnior%2C%20456%20-%20Cap%C3%A3o%20da%20Imbuia%2C%20Curitiba%20-%20PR&output=embed"
+              title="Mapa da localização da Spazio Pulsare"
+              src="https://www.google.com/maps?q=R.%20Prof.%20Nivaldo%20Braga%2C%201692%20-%20Cap%C3%A3o%20da%20Imbuia%2C%20Curitiba%20-%20PR%2C%2082810-150&output=embed"
               loading="lazy"
               className="h-[360px] w-full lg:h-full"
             />
@@ -552,14 +570,9 @@ function Footer() {
   return (
     <footer className="border-t border-border bg-background">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 px-5 py-10 sm:flex-row sm:justify-between">
-        <img
-          src={logoImage}
-          alt="Seven Beauties Estética Integrativa"
-          loading="lazy"
-          className="h-10 w-auto"
-          width={1400}
-          height={650}
-        />
+        <p className="font-display text-2xl font-semibold tracking-[0.28em] text-[#101215] sm:text-3xl">
+          SPAZIO PULSARE
+        </p>
         <p className="text-center text-xs text-muted-foreground sm:text-left">
           © {new Date().getFullYear()} {clinic.clinicName} · {clinic.tagline}
         </p>

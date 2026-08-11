@@ -54,7 +54,7 @@ export function IntroSplash({ children }: { children: React.ReactNode }) {
         <div
           role="presentation"
           onClick={dismiss}
-          className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#b8b8b8] transition-opacity duration-[400ms] ease-out ${
+          className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#000000] transition-opacity duration-[400ms] ease-out ${
             fading ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
         >

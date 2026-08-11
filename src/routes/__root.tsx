@@ -78,19 +78,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Seven Beauties | Estética Avançada & Integrativa" },
+      { title: "Spazio Pulsare | Estética & Bem-Estar" },
       {
         name: "description",
         content:
-          "Tratamentos faciais, corporais e terapias integrativas personalizados para você.",
+          "Cuidado que valoriza sua beleza natural com tratamentos exclusivos e planejados em estética e bem-estar.",
       },
-      { property: "og:site_name", content: "Seven Beauties" },
+      { property: "og:site_name", content: "Spazio Pulsare" },
       { property: "og:type", content: "website" },
+      { property: "og:title", content: "Spazio Pulsare | Estética & Bem-Estar" },
+      {
+        property: "og:description",
+        content:
+          "Cuidado que valoriza sua beleza natural com tratamentos exclusivos e planejados em estética e bem-estar.",
+      },
       { property: "og:image", content: `${siteUrl}/og-image.jpg` },
+      { property: "og:image:secure_url", content: `${siteUrl}/og-image.jpg` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Spazio Pulsare - Estética & Bem-Estar" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Spazio Pulsare | Estética & Bem-Estar" },
+      { name: "twitter:description", content: "Cuidado que valoriza sua beleza natural com tratamentos exclusivos e planejados em estética e bem-estar." },
       { name: "twitter:image", content: `${siteUrl}/og-image.jpg` },
+      { name: "twitter:image:alt", content: "Spazio Pulsare - Estética & Bem-Estar" },
     ],
     links: [
       {
@@ -103,7 +114,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap",
       },
-      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
     ],
   }),
 
@@ -115,7 +125,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>

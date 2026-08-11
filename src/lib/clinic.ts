@@ -1,22 +1,22 @@
 export const clinic = {
-  clinicName: "Seven Beauties",
-  tagline: "Estética Integrativa",
-  positioning: "Estética Avançada & Integrativa",
+  clinicName: "Spazio Pulsare",
+  tagline: "Estética & Bem-Estar",
+  positioning: "Cuidado que valoriza sua beleza natural",
   positioningDescription:
-    "Tratamentos faciais, corporais e terapias integrativas personalizados para você.",
+    "Tratamentos exclusivos e planejados para realçar sua beleza com naturalidade, confiança e bem-estar.",
   contact: {
-    phone: "(41) 99610-6171",
-    whatsapp: "5541996106171",
+    phone: "+55 41 9528-9824",
+    whatsapp: "554195289824",
     whatsappMessage:
-      "Olá! Gostaria de agendar uma avaliação na Seven Beauties Estética Integrativa.",
+      "Olá! Gostaria de agendar uma avaliação na Spazio Pulsare.",
     address:
-      "Rua Frederico Stadler Júnior, 456 - Capão da Imbuia, Curitiba - PR, 82210-230",
-    hours: "Segunda a sexta, das 8h às 18h",
-    mapsUrl: "https://maps.app.goo.gl/3mRjeqNLjDRRwJ3y7",
+      "R. Prof. Nivaldo Braga, 1692 - Capão da Imbuia, Curitiba - PR, 82810-150",
+    hours: "Atendimento sob agendamento",
+    mapsUrl: "https://maps.app.goo.gl/r9ob79wt9gsAph6s8",
     email: undefined as string | undefined,
   },
   social: {
-    instagram: undefined as string | undefined,
+    instagram: "https://www.instagram.com/dra.jessicaosc/",
     facebook: undefined as string | undefined,
   },
 };
@@ -28,9 +28,9 @@ export const whatsappUrl = `https://wa.me/${clinic.contact.whatsapp}?text=${enco
 // Domínio público do site, usado nas tags og:url/canonical e na imagem de
 // prévia (og:image/twitter:image) compartilhada em WhatsApp, etc.
 // Ao trocar para um domínio próprio, atualize só esta linha (ver README).
-export const siteUrl = "https://seven-beauties-murex.vercel.app";
+export const siteUrl = "https://spaziopulsare.com.br";
 
-export const responsibleTechnician = "Responsável técnica Crefito 8/75223-F";
+export const responsibleTechnician = "Dra. Jéssica Oliveira · CRBM 0625";
 
 export function getClinicOpenStatus(date: Date = new Date()): {
   open: boolean;
@@ -52,75 +52,69 @@ export type TreatmentGroup = {
 
 export const treatmentGroups: TreatmentGroup[] = [
   {
-    id: "facial",
-    title: "Estética Facial",
+    id: "bem-estar",
+    title: "Estética & Bem-Estar",
     description:
-      "Protocolos de rejuvenescimento e harmonia da pele, com técnica e naturalidade.",
+      "Cuidado pensado para valorizar sua beleza natural com conforto, técnica e atenção individualizada.",
     items: [
-      "Toxina Botulínica",
-      "Fios de PDO",
-      "Preenchedores Faciais",
-      "Skinbooster",
-      "Peeling Químico",
-      "Dermaplaning",
-      "Microagulhamento",
+      "Estética facial",
+      "Harmonização natural",
+      "Cuidados personalizados",
+      "Embelezamento consciente",
+      "Bem-estar como prioridade",
+    ],
+  },
+  {
+    id: "lavieen",
+    title: "Lavieen",
+    description:
+      "Rejuvenescimento facial com foco em luminosidade, textura e suavização de sinais da pele.",
+    items: [
       "Rejuvenescimento Facial",
-      "Limpeza de Pele",
-      "Mesoterapia",
+      "Clareamento de melasma e manchas de pele",
+      "Redução de poros dilatados",
+      "Melhora viço e textura da pele",
+      "Ameniza linhas finas",
+      "Efeito BB cream",
     ],
   },
   {
-    id: "corporal",
-    title: "Estética Corporal",
+    id: "botox",
+    title: "Botox",
     description:
-      "Contorno, drenagem e recuperação corporal com acompanhamento fisioterapêutico.",
+      "Tratamento para suavizar linhas de expressão e manter uma aparência leve, natural e renovada.",
+    items: ["Botox", "Linhas de expressão", "Naturalidade", "Resultado discreto"],
+  },
+  {
+    id: "envelhecimento",
+    title: "Controle do envelhecimento",
+    description:
+      "Protocolos pensados para prévenir sinais, melhorar a pele e preservar a sua identidade.",
     items: [
-      "Criolipólise",
-      "Drenagem Linfática",
-      "Massagem Redutora",
-      "Massagem Relaxante",
-      "Massagem Terapêutica",
-      "Massagem Miofascial",
-      "Pós-Operatório",
+      "Prevenção do envelhecimento",
+      "Tratamentos exclusivos",
+      "Melhora da luminosidade",
+      "Acompanhamento individualizado",
     ],
-  },
-  {
-    id: "procedimentos",
-    title: "Procedimentos Estéticos",
-    description:
-      "Tecnologia e precisão clínica para resultados consistentes e seguros.",
-    items: [
-      "Eletroterapia na Estética",
-      "PEIM – Microvasos",
-      "Depilação a Laser",
-      "Depilação com Cera",
-    ],
-  },
-  {
-    id: "integrativas",
-    title: "Terapias Integrativas",
-    description:
-      "Abordagens que equilibram corpo e mente, potencializando cada tratamento.",
-    items: ["Acupuntura", "Auriculoterapia", "Ventosaterapia", "Ozonioterapia"],
   },
 ];
 
 export const differentials = [
   {
-    title: "Avaliação individualizada",
-    text: "Cada protocolo nasce de uma escuta atenta e de uma análise clínica completa.",
+    title: "Estética & Bem-Estar",
+    text: "Um cuidado que alia estética, conforto e bem-estar em cada etapa do tratamento.",
   },
   {
-    title: "Visão integrativa",
-    text: "Estética, fisioterapia e terapias complementares trabalhando em conjunto.",
+    title: "Cuidado que valoriza sua beleza natural",
+    text: "A proposta é realçar o que você já tem de bonito, com naturalidade e elegância.",
   },
   {
-    title: "Técnica e segurança",
-    text: "Profissional habilitada, materiais certificados e protocolos atualizados.",
+    title: "Tratamentos exclusivos e planejados",
+    text: "Cada protocolo é pensado a partir do seu caso, objetivo e rotina para oferecer melhores resultados.",
   },
   {
-    title: "Resultados naturais",
-    text: "Realçar a sua beleza — sem exageros, respeitando a sua identidade.",
+    title: "Controle do envelhecimento",
+    text: "Estratégias para melhorar a qualidade da pele, suavizar sinais e manter um aspecto saudável e luminoso.",
   },
 ];
 
@@ -133,38 +127,38 @@ export const steps = [
 
 export const testimonials = [
   {
-    name: "Ana Paula M.",
-    text: "Me senti acolhida desde a primeira avaliação. O resultado ficou natural e exatamente como eu queria.",
+    name: "Ana P.",
+    text: "Senti que fui muito bem acolhida. O resultado ficou natural, elegante e exatamente no meu estilo.",
   },
   {
     name: "Carla S.",
-    text: "A abordagem integrativa fez diferença: além da estética, melhorei dores e qualidade de sono.",
+    text: "O cuidado foi super personalizado. A pele ficou mais luminosa, saudável e muito mais bonita.",
   },
   {
     name: "Juliana R.",
-    text: "Atendimento impecável e ambiente muito tranquilo. Recomendo de olhos fechados.",
+    text: "Ambiente acolhedor, atendimento excelente e um resultado que realmente valoriza a minha beleza natural.",
   },
 ];
 
 export const faqs = [
   {
     q: "Preciso de avaliação antes de iniciar um tratamento?",
-    a: "Sim. Toda jornada começa com uma avaliação para entender seu histórico, objetivos e indicar o protocolo mais seguro e eficaz.",
+    a: "Sim. A primeira consulta é essencial para entender seu objetivo, avaliar sua pele e indicar o protocolo mais adequado para você.",
   },
   {
-    q: "O que é estética integrativa?",
-    a: "É a união de procedimentos estéticos com terapias complementares — como acupuntura, auriculoterapia e ozonioterapia — cuidando da saúde como um todo, não apenas da aparência.",
+    q: "O que é o Lavieen?",
+    a: "É um protocolo de rejuvenescimento facial voltado para melhorar a luminosidade, textura, poros e linhas finas, com um efeito natural e sofisticado.",
   },
   {
-    q: "Os procedimentos doem?",
-    a: "A maioria é muito bem tolerada. Quando necessário, utilizamos anestésicos tópicos e técnicas de conforto para tornar a experiência tranquila.",
+    q: "O Botox é indicado para todo mundo?",
+    a: "O Botox é indicado para quem deseja suavizar linhas de expressão com naturalidade, desde que seja feito por uma profissional qualificada e com planejamento adequado.",
   },
   {
     q: "Em quanto tempo vejo resultados?",
-    a: "Depende do protocolo. Alguns tratamentos apresentam efeito imediato; outros são progressivos e evoluem ao longo das sessões, com acompanhamento contínuo.",
+    a: "Depende do tratamento. Alguns protocolos trazem melhora rápida, enquanto outros evoluem ao longo das sessões com acompanhamento contínuo.",
   },
   {
     q: "Como faço para agendar?",
-    a: "Pelo WhatsApp ou telefone (41) 99610-6171, de segunda a sexta, das 8h às 18h.",
+    a: "Você pode entrar em contato pelo WhatsApp ou pelo telefone +55 41 9528-9824 para agendar sua avaliação.",
   },
 ];

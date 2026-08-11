@@ -68,40 +68,43 @@
   --radius: 0.75rem;
 
   /* Brand palette */
-  --dusty-rose: oklch(0.62 0.108 5);
-  --rose-taupe: oklch(0.52 0.052 15);
-  --warm-white: oklch(0.985 0.006 60);
-  --champagne: oklch(0.9 0.032 75);
-  --graphite: oklch(0.265 0.012 285);
+  --navy-black: oklch(0.063 0.01 220);
+  --soft-nude: oklch(0.86 0.04 36);
+  --warm-ivory: oklch(0.965 0.009 80);
+  --taupe-brown: oklch(0.43 0.028 25);
+  --rusty-gold: oklch(0.72 0.08 70);
+  --sand-blush: oklch(0.82 0.05 45);
+  --muted-sand: oklch(0.93 0.02 35);
+  --soft-brown: oklch(0.58 0.04 25);
 
-  --background: var(--warm-white);
-  --foreground: var(--graphite);
+  --background: var(--warm-ivory);
+  --foreground: var(--navy-black);
   --card: oklch(1 0 0);
-  --card-foreground: var(--graphite);
+  --card-foreground: var(--navy-black);
   --popover: oklch(1 0 0);
-  --popover-foreground: var(--graphite);
-  --primary: var(--dusty-rose);
+  --popover-foreground: var(--navy-black);
+  --primary: var(--soft-brown);
   --primary-foreground: oklch(0.99 0.004 60);
-  --secondary: oklch(0.955 0.012 40);
-  --secondary-foreground: var(--graphite);
+  --secondary: var(--muted-sand);
+  --secondary-foreground: var(--navy-black);
   --muted: oklch(0.955 0.01 45);
-  --muted-foreground: oklch(0.53 0.02 20);
-  --accent: var(--champagne);
-  --accent-foreground: var(--graphite);
+  --muted-foreground: oklch(0.42 0.02 25);
+  --accent: var(--rusty-gold);
+  --accent-foreground: var(--navy-black);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.905 0.012 40);
-  --input: oklch(0.905 0.012 40);
-  --ring: var(--dusty-rose);
+  --border: oklch(0.874 0.013 32);
+  --input: oklch(0.874 0.013 32);
+  --ring: var(--rusty-gold);
 
-  --gradient-rose: linear-gradient(135deg, var(--dusty-rose), var(--rose-taupe));
+  --gradient-rose: linear-gradient(135deg, var(--soft-brown), var(--rusty-gold));
   --gradient-veil: linear-gradient(
     180deg,
-    color-mix(in oklab, var(--champagne) 26%, transparent),
-    transparent 65%
+    color-mix(in oklab, var(--soft-nude) 78%, transparent),
+    transparent 72%
   );
-  --shadow-soft: 0 12px 32px -18px color-mix(in oklab, var(--rose-taupe) 55%, transparent);
-  --shadow-elegant: 0 28px 64px -28px color-mix(in oklab, var(--rose-taupe) 60%, transparent);
+  --shadow-soft: 0 12px 32px -18px color-mix(in oklab, var(--taupe-brown) 48%, transparent);
+  --shadow-elegant: 0 28px 64px -28px color-mix(in oklab, var(--taupe-brown) 58%, transparent);
 }
 
 @layer base {
@@ -136,18 +139,18 @@
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--rose-taupe);
+  color: var(--soft-brown);
 }
 
 @utility surface-card {
-  background-color: var(--color-card);
-  border: 1px solid var(--color-border);
+  background-color: #f4f3f4;
+  border: 1px solid rgba(103, 82, 73, 0.12);
   border-radius: var(--radius-2xl);
   box-shadow: var(--shadow-soft);
 }
 
 @utility gradient-text {
-  background-image: var(--gradient-rose);
+  background-image: linear-gradient(135deg, var(--taupe-brown), var(--rusty-gold));
   background-clip: text;
   color: transparent;
 }
@@ -231,16 +234,16 @@
   font-family: var(--font-display);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--primary-foreground);
-  background-image: var(--gradient-rose);
+  color: #ffffff;
+  background: #946652;
   box-shadow: var(--shadow-soft);
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease,
-    filter 0.25s ease;
+    background-color 0.25s ease;
 
   &:hover {
-    filter: brightness(1.06);
+    background: #675249;
     box-shadow: var(--shadow-elegant);
     transform: translateY(-1px);
   }
@@ -251,7 +254,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(103, 82, 73, 0.2);
   padding: 0.7rem 1.4rem;
   font-family: var(--font-display);
   font-size: 0.875rem;
@@ -262,8 +265,8 @@
     border-color 0.25s ease;
 
   &:hover {
-    background-color: color-mix(in oklab, var(--champagne) 30%, transparent);
-    border-color: color-mix(in oklab, var(--rose-taupe) 35%, transparent);
+    background-color: rgba(220, 184, 161, 0.15);
+    border-color: rgba(103, 82, 73, 0.28);
   }
 }
 

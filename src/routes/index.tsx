@@ -296,7 +296,10 @@ function TreatmentCard({ group, delay }: { group: TreatmentGroup; delay: number 
 
   return (
     <Reveal delay={delay}>
-      <article className="surface-card h-full border border-[#675249]/10 bg-[#F4F3F4] p-7 transition-shadow duration-300 hover:shadow-[var(--shadow-elegant)]">
+      <article
+        className="surface-card h-full border border-transparent p-7 transition-shadow duration-300 hover:shadow-[var(--shadow-elegant)]"
+        style={{ backgroundColor: "#F8F7F5" }}
+      >
         <h3 className="font-display text-xl text-[#101215]">{group.title}</h3>
         <p className="mt-2 text-sm leading-relaxed text-[#101215]/70">
           {group.description}
@@ -328,7 +331,7 @@ function TreatmentCard({ group, delay }: { group: TreatmentGroup; delay: number 
 
 function Treatments() {
   return (
-    <section id="tratamentos" className="mx-auto max-w-6xl scroll-mt-24 bg-[#F8F7F5] px-5 py-20 lg:py-28">
+    <section id="tratamentos" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 lg:py-28">
       <SectionHead
         eyebrow="Tratamentos"
         title="Um cuidado para cada objetivo"

@@ -1,6 +1,6 @@
 # Seven Beauties: Estética Integrativa
 
-Vamos criar um site para uma clinica de estética, saúde e bem estar.
+Vamos criar um site para uma clinica de estética, saúde e bem estar. 
 Eu extrai um design system de um site que podemos usar como modelo está em anexo o arquivo .md
 vou te passar todos os dados da clinica abaixo:
 
@@ -14,27 +14,25 @@ vou te passar todos os dados da clinica abaixo:
 
 - **Descrição de marca**: "Tratamentos faciais, corporais e terapias integrativas personalizados para você."
 
+
 `"Estética Avançada"` é conceito de posicionamento — **não deve virar um card de procedimento** na seção de tratamentos.
 
 ---
-
 ##Paleta
 
 Fique a vontade para colocar as cores, a principio o que imaginei foi isso:
-
 - **Paleta**: Tailwind (`dustyRose`, `roseTaupe`, `warmWhite`, `champagne`, `graphite`). Mas o uso deve ser mais sofisticado e equilibrado — evitar aparência excessivamente "rosa", infantil ou de salão de beleza genérico. A página deve transmitir estética premium, elegância, feminilidade sofisticada, confiança, cuidado, saúde e bem-estar.
 
 ---
-
-## Conteúdo institucional
+## Conteúdo institucional 
 
 - `clinicName`: "Seven Beauties"
 
 - `tagline`: "Estética Integrativa"
 
-- `positioning`: "Estética Avançada & Integrativa" _(novo campo — headline de posicionamento, usado em copy institucional/metadata, não em UI de procedimento)_
+- `positioning`: "Estética Avançada & Integrativa" *(novo campo — headline de posicionamento, usado em copy institucional/metadata, não em UI de procedimento)*
 
-- `positioningDescription`: "Tratamentos faciais, corporais e terapias integrativas personalizados para você." _(novo campo)_
+- `positioningDescription`: "Tratamentos faciais, corporais e terapias integrativas personalizados para você." *(novo campo)*
 
 - `contact.phone`: "(41) 99610-6171"
 
@@ -49,12 +47,10 @@ Fique a vontade para colocar as cores, a principio o que imaginei foi isso:
 - `contact.email`: sem valor — campo opcional (`email?: string`); linha some da UI quando ausente. **Não inventar e-mail.**
 
 - `social.instagram` / `social.facebook`: sem valor por enquanto — campos opcionais; UI só renderiza os ícones cujo valor existir. **Não inventar redes sociais.**
-
 ---
-
 Inclua animações discretas e respeite prefers-reduced-motion.
 
-- Criar uma faixa/marquee com uma cor que combine com estilo, contínua com textos como:
+- Criar uma faixa/marquee com uma cor que combine com estilo,  contínua com textos como:
 
   “ESTÉTICA FACIAL • ESTÉTICA CORPORAL • TERAPIAS INTEGRATIVAS • SAÚDE • BEM ESTAR • ESTÉTICA AVANÇADA”
 
@@ -71,7 +67,6 @@ Inclua animações discretas e respeite prefers-reduced-motion.
 - Usar animações apenas como acabamento: entradas suaves no hero, leve flutuação de elementos decorativos e ícones, sem excesso.
 
 ---
-
 Se tiver duvida em alguma seção ou qquer coisa me pergunte antes
 
 Este projeto foi iniciado no [Lovable](https://lovable.dev) e depois baixado

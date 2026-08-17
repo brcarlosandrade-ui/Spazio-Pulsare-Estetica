@@ -1,12 +1,11 @@
-﻿import { createServerFn } from "@tanstack/react-start";
+import { createServerFn } from "@tanstack/react-start";
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
-  cloud_name: process.env["CLOUDINARY_CLOUD_NAME"],
-  api_key: process.env["CLOUDINARY_API_KEY"],
-  api_secret: process.env["CLOUDINARY_API_SECRET"],
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-} as any);
+  cloud_name: process.env["CLOUDINARY_CLOUD_NAME"] ?? "",
+  api_key: process.env["CLOUDINARY_API_KEY"] ?? "",
+  api_secret: process.env["CLOUDINARY_API_SECRET"] ?? "",
+});
 
 const FOLDER = "spazio-pulsare/antes-depois";
 const TAG = "antes-depois";

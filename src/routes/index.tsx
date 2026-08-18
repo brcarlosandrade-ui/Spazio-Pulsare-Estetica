@@ -11,6 +11,8 @@ import {
   Minus,
   Sparkles,
   GraduationCap,
+  ArrowLeft,
+  ArrowRight,
 } from "lucide-react";
 
 import draImage from "@/assets/doutora-jessica.jpg";
@@ -18,6 +20,13 @@ import heroImage from "@/assets/hero-clinic.jpg";
 import { Marquee } from "@/components/Marquee";
 import { Reveal } from "@/components/Reveal";
 import { IntroSplash } from "@/components/IntroSplash";
+import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 import { useQuery } from "@tanstack/react-query";
 import { listAntesDepois } from "@/lib/antes-depois";
 import {
@@ -85,10 +94,10 @@ export const Route = createFileRoute("/")({
 const NAV = [
   { href: "#tratamentos", label: "Tratamentos" },
   { href: "#diferenciais", label: "Diferenciais" },
-  { href: "#sobre", label: "Sobre" },
   { href: "#antes-depois", label: "Antes & Depois" },
   { href: "#depoimentos", label: "Depoimentos" },
   { href: "#duvidas", label: "Dúvidas" },
+  { href: "#sobre", label: "Sobre" },
   { href: "#contato", label: "Contato" },
 ];
 
@@ -102,10 +111,10 @@ function Home() {
           <Marquee />
           <Treatments />
           <Differentials />
-          <About />
           <AntesDepois />
           <Testimonials />
           <Faq />
+          <About />
           <Contact />
         </main>
         <Footer />
@@ -118,13 +127,13 @@ function Header() {
   const [open, setOpen] = useState(false);
   return (
     <header className="sticky top-0 z-50 border-b border-[#675249]/15 bg-[#F4F3F4]/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-5 py-3">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-8 px-6 py-3 xl:px-10">
         <a href="#topo" className="flex items-center">
           <span className="font-display text-lg font-semibold tracking-[0.22em] text-[#675249] sm:text-xl">
             SPAZIO PULSARE
           </span>
         </a>
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden items-center gap-8 lg:flex xl:gap-10">
           {NAV.map((n) => (
             <a
               key={n.href}
@@ -387,8 +396,8 @@ function Differentials() {
 
 function About() {
   return (
-    <section id="sobre" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 lg:py-28">
-      <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1.2fr]">
+    <section id="sobre" className="scroll-mt-24 bg-[#F3F1EF] py-20 lg:py-28">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[1.05fr_1.2fr]">
         <Reveal>
           <div className="relative overflow-hidden rounded-[2.2rem] border border-[#D9B77A]/60 bg-[#F4F3F4] p-3 shadow-[0_30px_90px_-32px_rgba(103,82,73,0.35)]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(217,183,122,0.28),transparent_58%)]" />
@@ -445,50 +454,96 @@ function AntesDepois() {
     staleTime: 5 * 60 * 1000,
   });
 
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  useEffect(() => {
+    if (!carouselApi) return;
+    const updateSelection = () => {
+      setCanScrollPrev(carouselApi.canScrollPrev());
+      setCanScrollNext(carouselApi.canScrollNext());
+    };
+    updateSelection();
+    carouselApi.on("select", updateSelection);
+    return () => {
+      carouselApi.off("select", updateSelection);
+    };
+  }, [carouselApi]);
+
   if (!pairs || pairs.length === 0) return null;
 
   return (
     <section id="antes-depois" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 lg:py-28">
-      <SectionHead
-        eyebrow="Antes & Depois"
-        title="Resultados reais, no ritmo de cada pele"
-        text="Uma seleção de casos acompanhados pela nossa equipe."
-      />
-      <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {pairs.map((pair, i) => (
-          <Reveal key={pair.beforeUrl} delay={i * 90}>
-            <article className="surface-card overflow-hidden border border-[#675249]/10 bg-[#F8F7F5] p-4">
-              <div className="grid grid-cols-2 gap-2">
-                <figure>
-                  <img
-                    src={pair.beforeUrl}
-                    alt={`${pair.treatment} - antes`}
-                    loading="lazy"
-                    className="aspect-square w-full rounded-xl object-cover"
-                  />
-                  <figcaption className="mt-2 text-center text-xs font-semibold text-[#946652]">
-                    Antes
-                  </figcaption>
-                </figure>
-                <figure>
-                  <img
-                    src={pair.afterUrl}
-                    alt={`${pair.treatment} - depois`}
-                    loading="lazy"
-                    className="aspect-square w-full rounded-xl object-cover"
-                  />
-                  <figcaption className="mt-2 text-center text-xs font-semibold text-[#946652]">
-                    Depois
-                  </figcaption>
-                </figure>
-              </div>
-              <p className="mt-4 font-display text-sm font-semibold text-[#101215]">
-                {pair.treatment}
-              </p>
-            </article>
-          </Reveal>
-        ))}
+      <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+        <SectionHead
+          eyebrow="Antes & Depois"
+          title="Resultados reais, no ritmo de cada pele"
+          text="Uma seleção de casos acompanhados pela nossa equipe."
+        />
+        <div className="flex shrink-0 gap-2">
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => carouselApi?.scrollPrev()}
+            disabled={!canScrollPrev}
+            aria-label="Caso anterior"
+            className="rounded-full border-[#675249]/20 text-[#675249] hover:bg-[#F3F1EF] disabled:pointer-events-auto"
+          >
+            <ArrowLeft className="size-5" />
+          </Button>
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => carouselApi?.scrollNext()}
+            disabled={!canScrollNext}
+            aria-label="Próximo caso"
+            className="rounded-full border-[#675249]/20 text-[#675249] hover:bg-[#F3F1EF] disabled:pointer-events-auto"
+          >
+            <ArrowRight className="size-5" />
+          </Button>
+        </div>
       </div>
+
+      <Carousel setApi={setCarouselApi} opts={{ align: "start" }} className="mt-12">
+        <CarouselContent className="-ml-6">
+          {pairs.map((pair, i) => (
+            <CarouselItem key={pair.beforeUrl} className="pl-6 sm:basis-1/2 lg:basis-1/3">
+              <Reveal delay={i * 60}>
+                <article className="surface-card h-full overflow-hidden border border-[#675249]/10 bg-[#F8F7F5] p-4">
+                  <div className="grid grid-cols-2 gap-2">
+                    <figure>
+                      <img
+                        src={pair.beforeUrl}
+                        alt={`${pair.treatment} - antes`}
+                        loading="lazy"
+                        className="aspect-square w-full rounded-xl object-cover"
+                      />
+                      <figcaption className="mt-2 text-center text-xs font-semibold text-[#946652]">
+                        Antes
+                      </figcaption>
+                    </figure>
+                    <figure>
+                      <img
+                        src={pair.afterUrl}
+                        alt={`${pair.treatment} - depois`}
+                        loading="lazy"
+                        className="aspect-square w-full rounded-xl object-cover"
+                      />
+                      <figcaption className="mt-2 text-center text-xs font-semibold text-[#946652]">
+                        Depois
+                      </figcaption>
+                    </figure>
+                  </div>
+                  <p className="mt-4 font-display text-sm font-semibold text-[#101215]">
+                    {pair.treatment}
+                  </p>
+                </article>
+              </Reveal>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     </section>
   );
 }

@@ -109,7 +109,14 @@ function AdminAntesDepois() {
         </div>
         <div>
           <Label htmlFor="before">Foto antes</Label>
-          <Input id="before" name="before" type="file" accept="image/*" required className="mt-1.5" />
+          <Input
+            id="before"
+            name="before"
+            type="file"
+            accept="image/*"
+            required
+            className="mt-1.5"
+          />
         </div>
         <div>
           <Label htmlFor="after">Foto depois</Label>
@@ -117,9 +124,7 @@ function AdminAntesDepois() {
         </div>
 
         {status.type === "error" && <p className="text-sm text-destructive">{status.message}</p>}
-        {status.type === "success" && (
-          <p className="text-sm text-emerald-600">{status.message}</p>
-        )}
+        {status.type === "success" && <p className="text-sm text-emerald-600">{status.message}</p>}
 
         <Button type="submit" disabled={status.type === "loading"} className="w-full">
           {status.type === "loading" ? "Enviando..." : "Publicar"}

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 import { uploadAntesDepois } from "@/lib/antes-depois";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ type Status =
 
 function AdminAntesDepois() {
   const [status, setStatus] = useState<Status>({ type: "idle" });
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -61,7 +63,27 @@ function AdminAntesDepois() {
       <form onSubmit={handleSubmit} className="mt-8 space-y-5">
         <div>
           <Label htmlFor="password">Senha</Label>
-          <Input id="password" name="password" type="password" required className="mt-1.5" />
+          <div className="relative mt-1.5">
+            <Input
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              required
+              className="pr-10"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+              className="absolute inset-y-0 right-0 flex items-center px-3 text-muted-foreground hover:text-foreground"
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" aria-hidden />
+              ) : (
+                <Eye className="h-4 w-4" aria-hidden />
+              )}
+            </button>
+          </div>
         </div>
         <div>
           <Label htmlFor="treatment">Tratamento</Label>

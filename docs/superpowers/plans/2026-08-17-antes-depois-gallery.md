@@ -18,6 +18,7 @@
 - Display text (treatment name, case label) is stored as Cloudinary `context` metadata on upload and read back on list — **this corrects the spec's "extract from filename" idea**, which is ambiguous (you can't tell where the treatment-slug ends and the case-slug begins once both are hyphenated). Functionally it still delivers exactly what the spec asks for: `{ treatment, caseLabel, beforeUrl, afterUrl }` per pair.
 - No automated test suite exists in this project (confirmed: no test runner in `package.json`). Verification steps below are manual (dev server + browser), matching the spec's explicit "fora de escopo" on automated tests.
 - New pair upload with the same treatment+case overwrites the previous one in Cloudinary (same `public_id`) — expected, not an error case.
+- The server module lives at `src/lib/antes-depois.ts`, not under any directory named `server` — this project's `@lovable.dev/vite-tanstack-config` configures TanStack Start's import-protection plugin with `client.files: ["**/server/**"]`, which unconditionally blocks any client-bundled import whose path contains a `server` path segment. Discovered mid-implementation (Task 2); ruled and corrected in the ledger. `src/lib/` already holds this project's other shared modules (`clinic.ts`, `utils.ts`, `error-page.ts`).
 
 ---
 
@@ -27,7 +28,7 @@
 - Modify: `package.json` (add `cloudinary` dependency — run install, don't hand-edit)
 - Modify: `.gitignore` (ignore local env files)
 - Create: `.env.example`
-- Create: `src/server/antes-depois.ts`
+- Create: `src/lib/antes-depois.ts`
 - Modify: `README.md` (document the new env vars)
 
 **Interfaces:**
@@ -70,7 +71,7 @@ UPLOAD_PASSWORD=
 
 - [ ] **Step 4: Write the Cloudinary server module**
 
-Create `src/server/antes-depois.ts`:
+Create `src/lib/antes-depois.ts`:
 
 ```ts
 import { createServerFn } from "@tanstack/react-start";
@@ -253,12 +254,12 @@ Run:
 npx tsc --noEmit
 npm run lint
 ```
-Expected: both pass with no errors related to `src/server/antes-depois.ts`.
+Expected: both pass with no errors related to `src/lib/antes-depois.ts`.
 
 - [ ] **Step 7: Commit**
 
 ```bash
-git add package.json package-lock.json .gitignore .env.example src/server/antes-depois.ts README.md
+git add package.json package-lock.json .gitignore .env.example src/lib/antes-depois.ts README.md
 git commit -m "feat: add Cloudinary server functions for antes/depois photos"
 ```
 
@@ -270,7 +271,7 @@ git commit -m "feat: add Cloudinary server functions for antes/depois photos"
 - Create: `src/routes/admin/antes-depois.tsx`
 
 **Interfaces:**
-- Consumes: `uploadAntesDepois` from `src/server/antes-depois.ts` (Task 1) — `uploadAntesDepois({ data: FormData }) => Promise<UploadAntesDepoisResult>`.
+- Consumes: `uploadAntesDepois` from `src/lib/antes-depois.ts` (Task 1) — `uploadAntesDepois({ data: FormData }) => Promise<UploadAntesDepoisResult>`.
 
 - [ ] **Step 1: Write the admin route**
 
@@ -280,7 +281,7 @@ Create `src/routes/admin/antes-depois.tsx`:
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 
-import { uploadAntesDepois } from "@/server/antes-depois";
+import { uploadAntesDepois } from "@/lib/antes-depois";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -420,7 +421,7 @@ git commit -m "feat: add password-gated antes/depois upload page"
 - Modify: `src/routes/index.tsx`
 
 **Interfaces:**
-- Consumes: `listAntesDepois` from `src/server/antes-depois.ts` (Task 1) — `listAntesDepois() => Promise<AntesDepoisPair[]>`; `AntesDepoisPair = { treatment: string; caseLabel: string; beforeUrl: string; afterUrl: string }`.
+- Consumes: `listAntesDepois` from `src/lib/antes-depois.ts` (Task 1) — `listAntesDepois() => Promise<AntesDepoisPair[]>`; `AntesDepoisPair = { treatment: string; caseLabel: string; beforeUrl: string; afterUrl: string }`.
 - Consumes: `SectionHead`, `Reveal` (already defined/imported in `src/routes/index.tsx`).
 
 - [ ] **Step 1: Add the import**
@@ -429,7 +430,7 @@ In `src/routes/index.tsx`, add to the existing import block (near the other `@/l
 
 ```tsx
 import { useQuery } from "@tanstack/react-query";
-import { listAntesDepois } from "@/server/antes-depois";
+import { listAntesDepois } from "@/lib/antes-depois";
 ```
 
 - [ ] **Step 2: Add the nav entry**

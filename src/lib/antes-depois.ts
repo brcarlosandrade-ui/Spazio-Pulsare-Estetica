@@ -1,11 +1,19 @@
 import { createServerFn } from "@tanstack/react-start";
-import { v2 as cloudinary } from "cloudinary";
 
-cloudinary.config({
-  cloud_name: process.env["CLOUDINARY_CLOUD_NAME"] ?? "",
-  api_key: process.env["CLOUDINARY_API_KEY"] ?? "",
-  api_secret: process.env["CLOUDINARY_API_SECRET"] ?? "",
-});
+// Lazy-load cloudinary to ensure it only runs on server
+let cloudinary: typeof import("cloudinary").v2;
+
+async function configureCloudinary(): Promise<void> {
+  if (!cloudinary) {
+    const mod = await import("cloudinary");
+    cloudinary = mod.v2;
+  }
+  cloudinary.config({
+    cloud_name: process.env["CLOUDINARY_CLOUD_NAME"] ?? "",
+    api_key: process.env["CLOUDINARY_API_KEY"] ?? "",
+    api_secret: process.env["CLOUDINARY_API_SECRET"] ?? "",
+  });
+}
 
 const FOLDER = "spazio-pulsare/antes-depois";
 const TAG = "antes-depois";
@@ -62,6 +70,8 @@ export async function uploadAntesDepoisHandler({
     return { ok: false, error: "Selecione a foto de depois." };
   }
 
+  await configureCloudinary();
+
   const caseKey = `${slugify(treatment)}-${slugify(caseLabel)}`;
   const context = { treatment: treatment.trim(), case_label: caseLabel.trim() };
 
@@ -108,6 +118,8 @@ type CloudinaryResource = {
 };
 
 export async function listAntesDepoisHandler(): Promise<AntesDepoisPair[]> {
+  await configureCloudinary();
+
   try {
     const result = await cloudinary.api.resources_by_tag(TAG, {
       max_results: 500,

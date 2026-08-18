@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 
-import { uploadAntesDepois } from "@/server/antes-depois";
+import { uploadAntesDepois } from "@/lib/antes-depois";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

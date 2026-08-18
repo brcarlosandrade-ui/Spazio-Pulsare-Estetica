@@ -14,7 +14,7 @@ export const Route = createFileRoute("/admin/antes-depois")({
   component: AdminAntesDepois,
 });
 
-const MAX_FILE_BYTES = 8 * 1024 * 1024; // 8MB — generous for a phone photo, safely under serverless body limits
+const MAX_TOTAL_BYTES = 4 * 1024 * 1024; // 4MB combined — Vercel's serverless request body limit is 4.5MB; this leaves headroom for multipart overhead
 
 type Status =
   | { type: "idle" }
@@ -31,25 +31,33 @@ function AdminAntesDepois() {
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    for (const field of ["before", "after"] as const) {
-      const file = formData.get(field);
-      if (file instanceof File && file.size > MAX_FILE_BYTES) {
-        setStatus({
-          type: "error",
-          message: `A foto "${field === "before" ? "antes" : "depois"}" está grande demais (máx. 8MB). Tente uma versão comprimida.`,
-        });
-        return;
-      }
+    const before = formData.get("before");
+    const after = formData.get("after");
+    const totalBytes =
+      (before instanceof File ? before.size : 0) + (after instanceof File ? after.size : 0);
+    if (totalBytes > MAX_TOTAL_BYTES) {
+      setStatus({
+        type: "error",
+        message:
+          "As fotos juntas estão grandes demais (máx. 4MB no total). Tente versões comprimidas.",
+      });
+      return;
     }
 
     setStatus({ type: "loading" });
-    const result = await uploadAntesDepois({ data: formData });
-
-    if (result.ok) {
-      setStatus({ type: "success", message: "Fotos publicadas com sucesso." });
-      form.reset();
-    } else {
-      setStatus({ type: "error", message: result.error });
+    try {
+      const result = await uploadAntesDepois({ data: formData });
+      if (result.ok) {
+        setStatus({ type: "success", message: "Fotos publicadas com sucesso." });
+        form.reset();
+      } else {
+        setStatus({ type: "error", message: result.error });
+      }
+    } catch {
+      setStatus({
+        type: "error",
+        message: "Não foi possível enviar. Verifique a conexão e tente novamente.",
+      });
     }
   }
 

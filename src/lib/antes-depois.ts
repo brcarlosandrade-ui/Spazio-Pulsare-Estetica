@@ -47,8 +47,13 @@ export async function uploadAntesDepoisHandler({
 }: {
   data: FormData;
 }): Promise<UploadAntesDepoisResult> {
+  const expectedPassword = process.env["UPLOAD_PASSWORD"];
+  if (!expectedPassword) {
+    console.error("UPLOAD_PASSWORD não configurada — upload desabilitado.");
+    return { ok: false, error: "Upload indisponível. Fale com o desenvolvedor." };
+  }
   const password = data.get("password");
-  if (typeof password !== "string" || password !== process.env["UPLOAD_PASSWORD"]) {
+  if (typeof password !== "string" || password !== expectedPassword) {
     return { ok: false, error: "Senha incorreta." };
   }
 
@@ -105,7 +110,6 @@ export const uploadAntesDepois = createServerFn({ method: "POST" })
 
 export type AntesDepoisPair = {
   treatment: string;
-  caseLabel: string;
   beforeUrl: string;
   afterUrl: string;
 };
@@ -117,7 +121,14 @@ type CloudinaryResource = {
   context?: { custom?: { treatment?: string; case_label?: string } };
 };
 
+let cachedPairs: { data: AntesDepoisPair[]; expiresAt: number } | null = null;
+const LIST_CACHE_TTL_MS = 60_000; // resources_by_tag is a rate-limited Cloudinary Admin API call (500/hr on the free plan); caching keeps normal site traffic well under quota
+
 export async function listAntesDepoisHandler(): Promise<AntesDepoisPair[]> {
+  if (cachedPairs && cachedPairs.expiresAt > Date.now()) {
+    return cachedPairs.data;
+  }
+
   await configureCloudinary();
 
   try {
@@ -140,22 +151,24 @@ export async function listAntesDepoisHandler(): Promise<AntesDepoisPair[]> {
       pairs.set(caseKey, entry);
     }
 
-    return Array.from(pairs.values())
+    const data = Array.from(pairs.values())
       .filter((entry): entry is { before: CloudinaryResource; after: CloudinaryResource } =>
         Boolean(entry.before && entry.after),
       )
       .map((entry) => ({
         treatment: entry.before.context?.custom?.treatment ?? "",
-        caseLabel: entry.before.context?.custom?.case_label ?? "",
         beforeUrl: entry.before.secure_url,
         afterUrl: entry.after.secure_url,
         sortAt: entry.before.created_at,
       }))
       .sort((a, b) => (a.sortAt < b.sortAt ? 1 : -1))
       .map(({ sortAt: _sortAt, ...pair }) => pair);
+
+    cachedPairs = { data, expiresAt: Date.now() + LIST_CACHE_TTL_MS };
+    return data;
   } catch (error) {
     console.error("Falha ao listar fotos antes/depois:", error);
-    return [];
+    return cachedPairs?.data ?? [];
   }
 }
 

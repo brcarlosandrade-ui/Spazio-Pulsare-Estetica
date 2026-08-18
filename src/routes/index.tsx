@@ -442,6 +442,7 @@ function AntesDepois() {
   const { data: pairs } = useQuery({
     queryKey: ["antes-depois"],
     queryFn: () => listAntesDepois(),
+    staleTime: 5 * 60 * 1000,
   });
 
   if (!pairs || pairs.length === 0) return null;
@@ -455,7 +456,7 @@ function AntesDepois() {
       />
       <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {pairs.map((pair, i) => (
-          <Reveal key={`${pair.treatment}-${pair.caseLabel}-${i}`} delay={i * 90}>
+          <Reveal key={pair.beforeUrl} delay={i * 90}>
             <article className="surface-card overflow-hidden border border-[#675249]/10 bg-[#F8F7F5] p-4">
               <div className="grid grid-cols-2 gap-2">
                 <figure>

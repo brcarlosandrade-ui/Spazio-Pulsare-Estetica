@@ -19,6 +19,7 @@
 - No automated test suite exists in this project (confirmed: no test runner in `package.json`). Verification steps below are manual (dev server + browser), matching the spec's explicit "fora de escopo" on automated tests.
 - New pair upload with the same treatment+case overwrites the previous one in Cloudinary (same `public_id`) — expected, not an error case.
 - The server module lives at `src/lib/antes-depois.ts`, not under any directory named `server` — this project's `@lovable.dev/vite-tanstack-config` configures TanStack Start's import-protection plugin with `client.files: ["**/server/**"]`, which unconditionally blocks any client-bundled import whose path contains a `server` path segment. Discovered mid-implementation (Task 2); ruled and corrected in the ledger. `src/lib/` already holds this project's other shared modules (`clinic.ts`, `utils.ts`, `error-page.ts`).
+- TanStack Start is isomorphic by default: only code inside `createServerFn(...).handler(fn)` bodies is stripped from the client bundle. `cloudinary.config()` (and any `process.env` read) must happen inside each handler, never at module scope — a module-scope call leaks the `cloudinary` package into the client bundle and crashes the page in the browser. Discovered mid-implementation (Task 2); ruled and corrected in the ledger.
 
 ---
 
@@ -77,11 +78,17 @@ Create `src/lib/antes-depois.ts`:
 import { createServerFn } from "@tanstack/react-start";
 import { v2 as cloudinary } from "cloudinary";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+// TanStack Start is isomorphic by default — module-scope code runs in BOTH
+// bundles. Only code inside .handler() bodies gets stripped from the client
+// build, so cloudinary.config() must be called from inside each handler,
+// never at module scope (see execution-model docs / ledger ruling).
+function configureCloudinary(): void {
+  cloudinary.config({
+    cloud_name: process.env["CLOUDINARY_CLOUD_NAME"] ?? "",
+    api_key: process.env["CLOUDINARY_API_KEY"] ?? "",
+    api_secret: process.env["CLOUDINARY_API_SECRET"] ?? "",
+  });
+}
 
 const FOLDER = "spazio-pulsare/antes-depois";
 const TAG = "antes-depois";
@@ -116,7 +123,7 @@ export async function uploadAntesDepoisHandler({
   data: FormData;
 }): Promise<UploadAntesDepoisResult> {
   const password = data.get("password");
-  if (typeof password !== "string" || password !== process.env.UPLOAD_PASSWORD) {
+  if (typeof password !== "string" || password !== process.env["UPLOAD_PASSWORD"]) {
     return { ok: false, error: "Senha incorreta." };
   }
 
@@ -141,6 +148,7 @@ export async function uploadAntesDepoisHandler({
   const caseKey = `${slugify(treatment)}-${slugify(caseLabel)}`;
   const context = { treatment: treatment.trim(), case_label: caseLabel.trim() };
 
+  configureCloudinary();
   try {
     await Promise.all([
       cloudinary.uploader.upload(await fileToDataUri(before), {
@@ -184,6 +192,7 @@ type CloudinaryResource = {
 };
 
 export async function listAntesDepoisHandler(): Promise<AntesDepoisPair[]> {
+  configureCloudinary();
   try {
     const result = await cloudinary.api.resources_by_tag(TAG, {
       max_results: 500,

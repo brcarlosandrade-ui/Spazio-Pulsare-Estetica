@@ -18,6 +18,8 @@ import heroImage from "@/assets/hero-clinic.jpg";
 import { Marquee } from "@/components/Marquee";
 import { Reveal } from "@/components/Reveal";
 import { IntroSplash } from "@/components/IntroSplash";
+import { useQuery } from "@tanstack/react-query";
+import { listAntesDepois } from "@/lib/antes-depois";
 import {
   clinic,
   differentials,
@@ -84,6 +86,7 @@ const NAV = [
   { href: "#tratamentos", label: "Tratamentos" },
   { href: "#diferenciais", label: "Diferenciais" },
   { href: "#sobre", label: "Sobre" },
+  { href: "#antes-depois", label: "Antes & Depois" },
   { href: "#depoimentos", label: "Depoimentos" },
   { href: "#duvidas", label: "Dúvidas" },
   { href: "#contato", label: "Contato" },
@@ -100,6 +103,7 @@ function Home() {
           <Treatments />
           <Differentials />
           <About />
+          <AntesDepois />
           <Testimonials />
           <Faq />
           <Contact />
@@ -429,6 +433,60 @@ function About() {
             </a>
           </div>
         </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function AntesDepois() {
+  const { data: pairs } = useQuery({
+    queryKey: ["antes-depois"],
+    queryFn: () => listAntesDepois(),
+  });
+
+  if (!pairs || pairs.length === 0) return null;
+
+  return (
+    <section id="antes-depois" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 lg:py-28">
+      <SectionHead
+        eyebrow="Antes & Depois"
+        title="Resultados reais, no ritmo de cada pele"
+        text="Uma seleção de casos acompanhados pela nossa equipe."
+      />
+      <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {pairs.map((pair, i) => (
+          <Reveal key={`${pair.treatment}-${pair.caseLabel}-${i}`} delay={i * 90}>
+            <article className="surface-card overflow-hidden border border-[#675249]/10 bg-[#F8F7F5] p-4">
+              <div className="grid grid-cols-2 gap-2">
+                <figure>
+                  <img
+                    src={pair.beforeUrl}
+                    alt={`${pair.treatment} - antes`}
+                    loading="lazy"
+                    className="aspect-square w-full rounded-xl object-cover"
+                  />
+                  <figcaption className="mt-2 text-center text-xs font-semibold text-[#946652]">
+                    Antes
+                  </figcaption>
+                </figure>
+                <figure>
+                  <img
+                    src={pair.afterUrl}
+                    alt={`${pair.treatment} - depois`}
+                    loading="lazy"
+                    className="aspect-square w-full rounded-xl object-cover"
+                  />
+                  <figcaption className="mt-2 text-center text-xs font-semibold text-[#946652]">
+                    Depois
+                  </figcaption>
+                </figure>
+              </div>
+              <p className="mt-4 font-display text-sm font-semibold text-[#101215]">
+                {pair.treatment}
+              </p>
+            </article>
+          </Reveal>
+        ))}
       </div>
     </section>
   );

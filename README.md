@@ -86,6 +86,20 @@ compartilhar o link no WhatsApp etc.) fica centralizado na constante
 outros arquivos (`src/routes/__root.tsx` e `src/routes/index.tsx`) já
 leem o valor de lá.
 
+## Antes & Depois (upload de fotos pela clínica)
+
+A seção pública "Antes & Depois" e a página `/admin/antes-depois` dependem de
+uma conta Cloudinary (da clínica, não sua — ver decisão no design doc) e de
+quatro variáveis de ambiente, listadas em `.env.example`:
+
+- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` — em
+  Cloudinary Console > Settings > Access Keys.
+- `UPLOAD_PASSWORD` — senha simples que protege a página de upload.
+
+Para desenvolvimento local, copie `.env.example` para `.env` e preencha os
+valores (esse arquivo não é versionado). Na Vercel, configure as mesmas
+variáveis em Project Settings > Environment Variables.
+
 ## Development
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).

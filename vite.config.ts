@@ -12,4 +12,12 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Nitro's default rollup chunking splits the server bundle in a way that creates a
+  // circular import between two generated chunks under the "vercel" preset specifically
+  // (createCsrfMiddleware ends up undefined at call time — nitrojs/nitro#3905). Forcing a
+  // single-file SSR bundle sidesteps the chunk-ordering bug entirely.
+  // `inlineDynamicImports` isn't in @lovable.dev/vite-tanstack-config's narrow nitro type
+  // (deliberately kept minimal since Nitro v3 is pre-RC), but it's forwarded to nitro() as-is
+  // at runtime — the cast below only bypasses the type check, not the actual behavior.
+  nitro: { inlineDynamicImports: true } as { preset?: string },
 });

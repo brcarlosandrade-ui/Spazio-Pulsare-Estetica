@@ -86,19 +86,32 @@ compartilhar o link no WhatsApp etc.) fica centralizado na constante
 outros arquivos (`src/routes/__root.tsx` e `src/routes/index.tsx`) já
 leem o valor de lá.
 
-## Antes & Depois (upload de fotos pela clínica)
+## Antes & Depois (posts do Instagram)
 
-A seção pública "Antes & Depois" e a página `/admin/antes-depois` dependem de
-uma conta Cloudinary (da clínica, não sua — ver decisão no design doc) e de
-quatro variáveis de ambiente, listadas em `.env.example`:
+A seção pública "Antes & Depois" lê uma planilha do Google Sheets mantida
+pela própria clínica, com duas colunas: `url` (link do post do Instagram) e
+`ativo` (SIM/NÃO). Não existe mais página de admin nem senha — a clínica
+adiciona um caso novo direto na planilha.
 
-- `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` — em
-  Cloudinary Console > Settings > Access Keys.
-- `UPLOAD_PASSWORD` — senha simples que protege a página de upload.
+Passo a passo pra clínica publicar um novo caso:
 
-Para desenvolvimento local, copie `.env.example` para `.env` e preencha os
-valores (esse arquivo não é versionado). Na Vercel, configure as mesmas
-variáveis em Project Settings > Environment Variables.
+1. Postar o antes/depois no Instagram normalmente.
+2. Copiar o link da publicação.
+3. Abrir a planilha "Antes & Depois", colar o link numa linha nova e marcar
+   `ativo` como `SIM`.
+4. O site atualiza sozinho em até ~5 minutos (tempo de cache).
+
+Configuração (uma vez só):
+
+1. Criar a planilha com as colunas `url` e `ativo`.
+2. `Arquivo > Compartilhar > Publicar na Web`, formato **CSV**. Isso gera uma
+   URL pública tipo `https://docs.google.com/spreadsheets/d/e/SEU_ID/pub?output=csv`.
+3. Colocar essa URL na variável `INSTAGRAM_SHEET_CSV_URL`, listada em
+   `.env.example`.
+
+Para desenvolvimento local, copie `.env.example` para `.env` e preencha o
+valor (esse arquivo não é versionado). Na Vercel, configure a mesma variável
+em Project Settings > Environment Variables.
 
 ## Development
 

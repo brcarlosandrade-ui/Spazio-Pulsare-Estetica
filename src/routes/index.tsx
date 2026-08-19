@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Autoplay from "embla-carousel-autoplay";
 import {
   Phone,
   MapPin,
@@ -28,7 +29,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { useQuery } from "@tanstack/react-query";
-import { listAntesDepois } from "@/lib/antes-depois";
+import { listInstagramPosts } from "@/lib/instagram-posts";
 import {
   clinic,
   differentials,
@@ -42,6 +43,12 @@ import {
   whatsappUrl,
   type TreatmentGroup,
 } from "@/lib/clinic";
+
+declare global {
+  interface Window {
+    instgrm?: { Embeds: { process: () => void } };
+  }
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -447,13 +454,34 @@ function About() {
   );
 }
 
+const INSTAGRAM_EMBED_SCRIPT_SRC = "https://www.instagram.com/embed.js";
+
+function loadInstagramEmbedScript(onLoad: () => void) {
+  const existing = document.querySelector<HTMLScriptElement>(
+    `script[src="${INSTAGRAM_EMBED_SCRIPT_SRC}"]`,
+  );
+  if (existing) {
+    if (window.instgrm) onLoad();
+    else existing.addEventListener("load", onLoad);
+    return;
+  }
+  const script = document.createElement("script");
+  script.src = INSTAGRAM_EMBED_SCRIPT_SRC;
+  script.async = true;
+  script.addEventListener("load", onLoad);
+  document.body.appendChild(script);
+}
+
 function AntesDepois() {
-  const { data: pairs } = useQuery({
-    queryKey: ["antes-depois"],
-    queryFn: () => listAntesDepois(),
+  const { data: posts } = useQuery({
+    queryKey: ["instagram-posts"],
+    queryFn: () => listInstagramPosts(),
     staleTime: 5 * 60 * 1000,
   });
 
+  const autoplay = useRef(Autoplay({ delay: 5500, stopOnInteraction: true }));
+  const hasNavigatedManually = useRef(false);
+  const carouselRootRef = useRef<HTMLDivElement>(null);
   const [carouselApi, setCarouselApi] = useState<CarouselApi>();
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
@@ -464,14 +492,48 @@ function AntesDepois() {
       setCanScrollPrev(carouselApi.canScrollPrev());
       setCanScrollNext(carouselApi.canScrollNext());
     };
+    const markNavigatedManually = () => {
+      hasNavigatedManually.current = true;
+    };
     updateSelection();
     carouselApi.on("select", updateSelection);
+    carouselApi.on("pointerDown", markNavigatedManually);
     return () => {
       carouselApi.off("select", updateSelection);
+      carouselApi.off("pointerDown", markNavigatedManually);
     };
   }, [carouselApi]);
 
-  if (!pairs || pairs.length === 0) return null;
+  const pauseAutoplay = () => autoplay.current.stop();
+  const resumeAutoplayIfUntouched = () => {
+    if (!hasNavigatedManually.current) autoplay.current.play();
+  };
+
+  // Hovering directly over an embedded Instagram post (a cross-origin iframe) never
+  // fires mouseenter on ancestors — the browser doesn't bubble hover across that
+  // boundary. Focus does cross it: clicking into a post to interact blurs the
+  // window, which is a reliable signal the visitor is engaging with that card.
+  useEffect(() => {
+    const handleBlur = () => {
+      const active = document.activeElement;
+      if (active instanceof HTMLIFrameElement && carouselRootRef.current?.contains(active)) {
+        pauseAutoplay();
+      }
+    };
+    window.addEventListener("blur", handleBlur);
+    window.addEventListener("focus", resumeAutoplayIfUntouched);
+    return () => {
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("focus", resumeAutoplayIfUntouched);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!posts || posts.length === 0) return;
+    loadInstagramEmbedScript(() => window.instgrm?.Embeds.process());
+  }, [posts]);
+
+  if (!posts || posts.length === 0) return null;
 
   return (
     <section id="antes-depois" className="mx-auto max-w-6xl scroll-mt-24 px-5 py-20 lg:py-28">
@@ -485,7 +547,11 @@ function AntesDepois() {
           <Button
             size="icon"
             variant="outline"
-            onClick={() => carouselApi?.scrollPrev()}
+            onClick={() => {
+              hasNavigatedManually.current = true;
+              autoplay.current.stop();
+              carouselApi?.scrollPrev();
+            }}
             disabled={!canScrollPrev}
             aria-label="Caso anterior"
             className="rounded-full border-[#675249]/20 text-[#675249] hover:bg-[#F3F1EF] disabled:pointer-events-auto"
@@ -495,7 +561,11 @@ function AntesDepois() {
           <Button
             size="icon"
             variant="outline"
-            onClick={() => carouselApi?.scrollNext()}
+            onClick={() => {
+              hasNavigatedManually.current = true;
+              autoplay.current.stop();
+              carouselApi?.scrollNext();
+            }}
             disabled={!canScrollNext}
             aria-label="Próximo caso"
             className="rounded-full border-[#675249]/20 text-[#675249] hover:bg-[#F3F1EF] disabled:pointer-events-auto"
@@ -505,40 +575,25 @@ function AntesDepois() {
         </div>
       </div>
 
-      <Carousel setApi={setCarouselApi} opts={{ align: "start" }} className="mt-12">
+      <Carousel
+        ref={carouselRootRef}
+        setApi={setCarouselApi}
+        opts={{ align: "start" }}
+        plugins={[autoplay.current]}
+        className="mt-12"
+        onMouseEnter={pauseAutoplay}
+        onMouseLeave={resumeAutoplayIfUntouched}
+        onTouchStart={pauseAutoplay}
+      >
         <CarouselContent className="-ml-6">
-          {pairs.map((pair, i) => (
-            <CarouselItem key={pair.beforeUrl} className="pl-6 sm:basis-1/2 lg:basis-1/3">
+          {posts.map((post, i) => (
+            <CarouselItem key={post.url} className="pl-6 sm:basis-1/2 lg:basis-1/3">
               <Reveal delay={i * 60}>
-                <article className="surface-card h-full overflow-hidden border border-[#675249]/10 bg-[#F8F7F5] p-4">
-                  <div className="grid grid-cols-2 gap-2">
-                    <figure>
-                      <img
-                        src={pair.beforeUrl}
-                        alt={`${pair.treatment} - antes`}
-                        loading="lazy"
-                        className="aspect-square w-full rounded-xl object-cover"
-                      />
-                      <figcaption className="mt-2 text-center text-xs font-semibold text-[#946652]">
-                        Antes
-                      </figcaption>
-                    </figure>
-                    <figure>
-                      <img
-                        src={pair.afterUrl}
-                        alt={`${pair.treatment} - depois`}
-                        loading="lazy"
-                        className="aspect-square w-full rounded-xl object-cover"
-                      />
-                      <figcaption className="mt-2 text-center text-xs font-semibold text-[#946652]">
-                        Depois
-                      </figcaption>
-                    </figure>
-                  </div>
-                  <p className="mt-4 font-display text-sm font-semibold text-[#101215]">
-                    {pair.treatment}
-                  </p>
-                </article>
+                <blockquote
+                  className="instagram-media"
+                  data-instgrm-permalink={post.url}
+                  data-instgrm-version="14"
+                />
               </Reveal>
             </CarouselItem>
           ))}
